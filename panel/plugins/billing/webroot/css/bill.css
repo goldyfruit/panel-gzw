@@ -1,0 +1,159 @@
+body {
+    margin: 10px auto;
+    background: #FFF;
+    /* Tempoiraire utilise la police et la couleur de Gv2 */
+    color: #4B483A;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+    line-height: 16px;
+    width: 600px;
+}
+
+#globalbox {
+    min-height: 0;
+    width: 600px;
+    background: #FFF;
+    border-left: 10px solid #FFF;
+    border-right: 10px solid #FFF;
+    border-bottom: none;
+}
+
+#header_logo {
+    display: block;
+    position: static;
+    margin: 0 0 0 15px;
+}
+
+#main {
+    width: auto;
+    float: none;
+    margin-top: 10px;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+#main h1, #main h2, #main h3, #main h4 {
+    color: #f17c00;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: normal;
+    margin-bottom: 6px;
+    margin-top: 0;
+}
+
+#main h2 {
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 4px 0 2px;
+}
+
+.button, .button_green, .button_mini {
+    float: right;
+}
+
+a:link, a:visited {
+    text-decoration:none;
+    color: blue;
+}
+
+.print {
+    text-align: right;
+    font-size: 11px;
+}
+
+strong {
+    color: #000;
+}
+
+p#bill_date {
+    margin: 0 0 20px 0;
+	font-size: 11px;
+}
+
+.table, .table *, .table th, #main .boxblc, #main .boxbrc {
+    background: none;
+}
+
+table {
+    width: 564px;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+/* Bills infos */
+table#bill_infos {
+    margin: 20px 0 25px 0;
+}
+
+table#bill_infos td {
+    vertical-align: top;
+}
+
+/* Bills detail */
+table.bill_detail {
+    width: 564px;
+    table-layout: fixed;
+    overflow: hidden;
+    word-wrap: break-word; /* http://www.w3.org/TR/css3-text/#word-wrap */
+}
+
+table.bill_detail caption {
+    background: #FFF;
+    height: 8px;
+}
+
+/* Bills price */
+table#bill_price {
+    text-align: right;
+    margin-top: 30px;
+}
+
+table#bill_price td {
+    width: 100%;
+    padding: 1px 30px 1px 5px;
+    white-space: nowrap;
+}
+
+table#bill_price td.title {
+    text-align: right;
+}
+
+#bill th {
+    border-bottom: 1px solid #000;
+}
+
+#bill td:first-child {
+    text-align: left;
+}
+
+#bill td {
+    border-bottom: 1px solid #000;
+    padding: 4px;
+    vertical-align: top;
+    overflow: hidden;
+    text-align: left;
+}
+
+/* Prix totaux (v3) */
+table#summary {
+    margin: 15px 0;
+}
+
+    table#summary tr td.title {
+        text-align: right;
+    }
+
+    table#summary tr td.price {
+        text-align: center;
+        width: 75px;
+    }
+
+        table#summary tr td.price span.highlight {
+            color: #CC6A00;
+        }
+
+#dumper, #dumper_area {
+    display: none;
+}

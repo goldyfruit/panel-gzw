@@ -1,0 +1,69 @@
+* {
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-image: url(../img/main/background.png);
+	font-family: Geneva,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	margin: 5px 10px 5px 10px;
+}
+
+#header {
+	background-image: url(../img/main/background_footer.png);
+	border-bottom: 1px solid #999999;
+	height: 80px;
+}
+
+#header .logo {
+	float: left;
+	height: 80px;
+	margin-left: 10px;
+	width: 150px;
+}
+
+#footer {
+	background-image: url(../img/main/background_footer.png);
+	color: #FFFFFF;
+	font-size: 10px;
+	margin: 70px 0 0 0;
+	padding: 5px 5px 5px 0;
+	text-align: right;
+	height: 75px;
+}
+
+#footer a {
+	color: #FFFFFF;
+	text-decoration:none;
+}
+#footer a:hover {
+	color:#000000;
+	text-decoration:underline;
+}
+
+#encadrement {
+	border:1px solid #999999;
+	height:auto;
+	margin-bottom:5px;
+	margin-top:3%;
+	width:700px;
+}
+
+#centre {
+	background-color:#FFFFFF;
+	padding-top:8em;
+}
+
+input {
+	border: 1px solid #999999;
+	margin: 0;
+	padding: 1px;
+}
+
+select {
+	border: 1px solid #999999;
+	margin: 0;
+	padding: 1px;
+}

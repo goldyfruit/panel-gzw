@@ -1,0 +1,121 @@
+#!/usr/bin/perl
+#
+##########################################################################
+# Panel-GZW is a web hosting panel for Unix/Linux platforms.
+# Copyright (C) 2005 - 2011  GoldZone Web - gaetan.trellu@goldzoneweb.info
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+###########################################################################
+#
+use lib "/opt/panel-gzw/lib";
+use strict;
+use warnings;
+use Proc::PID::File;
+use Proc::Daemon;
+use Log::Dispatch;
+use Log::Dispatch::File;
+use Date::Format;
+use File::Spec;
+use DBI;                                        # Load the DBI module.
+use GZW;                                                # Load GZW module, necessary to SQL connection.
+use SQL;
+use DNS;
+use CRON;
+use REDIRECT;
+
+use constant DAEMON   => 'panel-gzw';
+use constant LOG_DIR  => '/var/log/' . DAEMON;
+use constant LOG_FILE => DAEMON . '.log';
+use constant PIDDIR   => LOG_DIR;
+
+sub dienice ($);
+
+my $interval = 1;	# waiting time (in seconds)
+
+startDaemon();		# fork and background process
+
+# Setup a logging agent
+my $log = new Log::Dispatch(
+	callbacks => sub {
+		my %h = @_;
+		return Date::Format::time2str( '%B %e %T', time ) . ' ' . DAEMON . " \[$$]: " . $h{message} . "\n";
+	}
+);
+
+$log->add(
+	Log::Dispatch::File->new(
+		name	  => 'file1',
+		min_level => 'warning',
+		mode	  => 'append',
+		filename  => File::Spec->catfile( LOG_DIR, LOG_FILE ),
+	)
+);
+
+$log->warning( "Starting Processing:  " . time() );
+
+# Setup signal handlers so that we have time to cleanup before shutting down
+my $keep_going = 1;
+$SIG{HUP}  = sub { $log->warning("Caught SIGHUP:  exiting gracefully"); $keep_going = 0; };
+$SIG{INT}  = sub { $log->warning("Caught SIGINT:  exiting gracefully"); $keep_going = 0; };
+$SIG{QUIT} = sub { $log->warning("Caught SIGQUIT:  exiting gracefully"); $keep_going = 0; };
+$SIG{TERM} = sub { $log->warning("Caught SIGTERM:  exiting gracefully"); $keep_going = 0; };
+
+# enter main loop
+while ($keep_going) {
+
+	GZW::Connection();
+        SQL::CreateDatabase();
+        SQL::CreateUser();
+        SQL::DropDatabase();
+        SQL::DropUser();
+        SQL::ChangePassword();
+        DNS::CreateDomainName();
+        DNS::DeleteDomainName();
+        DNS::EditDomainName();
+        DNS::CreateSubDomain();
+        DNS::DeleteSubDomain();
+        CRON::CreateJob();
+        CRON::DeleteJob();
+	REDIRECT::CreateRedirection();
+	REDIRECT::DeleteRedirection();
+        GZW::Connection->disconnect;
+
+
+	sleep( $interval );
+}
+
+# Mark a clean exit in the log
+$log->warning( "Stopping Processing:  " . time() );
+
+# startDaemon
+# Fork and detach from the parent process
+sub startDaemon {
+	# Fork and detach from the parent process
+	eval { Proc::Daemon::Init; };
+	if ($@) {
+		$log->warning( "Unable to start daemon:  $@  " . time() );
+		dienice("Unable to start daemon:  $@");
+	}
+	# Get a PID file
+	dienice("Already running!") if Proc::PID::File->running();
+}
+
+# dienice
+# write die messages to the log before die'ing
+sub dienice ($) {
+	my ( $package, $filename, $line ) = caller;
+	$log->critical("$_[0] at line $line in $filename");
+	die $_[0];
+}
+__END__

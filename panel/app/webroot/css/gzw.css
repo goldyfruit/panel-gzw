@@ -1,0 +1,582 @@
+* {
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-image: url(../img/main/background.png);
+	font-family: Geneva,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	margin: 5px 10px 5px 10px;
+}
+
+.highlight {
+	color: #FF6600;
+}
+
+/*************************************************
+******************** HEADER **********************
+*************************************************/
+#header {
+	background-image: url(../img/main/background_footer.png);
+	border: 1px solid #333333;
+	height: 80px;
+}
+
+#header .logo {
+	float: left;
+	height: 80px;
+	margin-left: 30px;
+	width: 150px;
+}
+
+#header .infos {
+	color: #FFFFFF;
+	font-size: 11px;
+	font-style: normal;
+	margin-left: 50px;
+	margin-top: 10px;
+}
+
+#header .title {
+	color: #FFFFFF;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 20px;
+	font-style: italic;
+	margin-left: 120px;
+	padding-top: 10px;
+}
+
+/*************************************************
+******************** WEBLINK  ********************
+*************************************************/
+#weblink {
+	background-color:#FFFFFF;
+	border-color:#333333 #333333 #333333 #FFFFFF;
+	border-style:solid;
+	border-width:0 1px 1px 0;
+	margin-bottom:5px;
+	margin-left:125px;
+	margin-top:0;
+	padding-bottom:3px;
+	padding-left:25px;
+	padding-top:6px;
+	width:330px;
+}
+
+#weblink a:hover {
+	background-image:url(../img/main/link_a_hover.png);
+	background-repeat:no-repeat;
+	color:#000000;
+	font-weight:bold;
+	padding:5px 25px;
+}
+#weblink a {
+	background-image:url(../img/main/link_a.png);
+	background-repeat:no-repeat;
+	color:#999999;
+	font-weight:bold;
+	padding:5px 25px;
+	text-decoration:none;
+}
+
+/*************************************************
+********************** MENU **********************
+*************************************************/
+#colonne_menu {
+	background-color: #FFFFFF;
+	float: left;
+	width: 135px;
+}
+
+#menu {
+	border-bottom: 1px solid #333333;
+	border-left: 1px solid #333333;
+	border-right: 1px solid #333333;
+	padding-top: 10px;
+}
+
+#menu li {
+	display: inline;
+	list-style-type: none;
+}
+
+#menu ul {
+	border-bottom: 1px dashed #999999;
+	margin: 0;
+	padding: 0 0 5px 3px;
+}
+
+#menu a {
+	background-image: url(../img/main/link_a.png);
+	background-repeat: no-repeat;
+	color: #999999;
+	display: block;
+	font-weight: bold;
+	padding: 5px 0 5px 25px;
+	text-decoration: none;
+}
+#menu a:hover {
+	background-image: url(../img/main/link_a_hover.png);
+	background-repeat: no-repeat;
+	color: #000000;
+	display: block;
+	font-weight: bold;
+	padding: 5px 0 5px 25px;
+}
+
+#menu .disconnect {
+	border-bottom: 1px solid #999999;
+	padding: 5px 0 0 3px;
+}
+
+#menu .disconnect a {
+	background-image: url(../img/main/quit_a.png);
+	display: block;
+}
+
+#menu .disconnect a:hover {
+	background-image: url(../img/main/quit_a_hover.png);
+	color: #000000;
+}
+
+#menu .version {
+	color: #FF6600;
+	font-size: 10px;
+	padding: 2px 0 2px 0;
+	text-align: center;
+	text-decoration: blink;
+}
+
+#infos {
+	border: 1px solid #000000;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10px;
+	margin-top: 5px;
+	padding: 5px;
+}
+
+/*************************************************
+****************** MENU OPTIONS ******************
+*************************************************/
+#options {
+	background-color: #FFFFFF;
+	border-color: #333333 #333333 #CCCCCC;
+	border-style: solid;
+	border-width: 1px;
+	margin: 0 0 0 140px;
+}
+
+#options .title {
+	background-image: url(../img/main/background_option.png);
+	border-bottom: 1px solid #000000;
+	padding: 3px 0 3px 5px;
+}
+
+#options .menu_links {
+	margin-left: 10px;
+}
+
+#options .links_option {
+	background-image: url(../img/main/background_option.png);
+	border: 1px solid #000000;
+	margin: 10px 10px 10px 0;
+	padding-top: 5px;
+	text-align: center;
+	width: 95px;
+}
+
+#options .links_option a:hover {
+	background-image: url(../img/main/option_a_hover.png);
+	border-top: 1px solid #000000;
+	color: #333333;
+	display: block;
+	padding: 2px 0 2px 0;
+}
+
+#options .links_option a {
+	border-top: 1px solid #999999;
+	color: #666666;
+	display: block;
+	padding: 2px 0 2px 0;
+	text-decoration: none;
+}
+
+#options .links_option img {
+	border: 1px dashed #666666;
+	height: 40px;
+	margin: 1px 0 2px 0;
+	padding: 5px;
+	width: 40px;
+}
+
+#options .links_option dd {
+	margin-top: 2px;
+}
+
+/*************************************************
+******************** CONTENT *********************
+*************************************************/
+#content {
+	background-image: url(../img/main/background_footer.png);
+	border: 1px solid #333333;
+	margin-left: 140px;
+}
+
+#content .main {
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #333333;
+	border-left: 1px solid #333333;
+	border-top: 1px solid #333333;
+	margin: 5px 0 5px 5px;
+	padding: 0 0 10px 5px;
+}
+
+#content .name {
+	color: #999999;
+	font-size: 24px;
+	font-style: italic;
+	height: 70px;
+	margin-left: 101px;
+	padding: 5px 0 30px 0;
+}
+
+#content .image {
+	float: left;
+	height: 100px;
+	padding-top: 5px;
+	width: 100px;
+}
+
+#content .main_display {
+		margin: 0 5px 0 20px;
+}
+
+#content .infos {
+	background-color: #F9F9F9;
+	border: 1px dashed #CCCCCC;
+	color: #000000;
+	font-size: 12px;
+	font-style: normal;
+	margin: 5px 5px 5px 0;
+	padding: 3px;
+}
+
+#content .advice {
+	border:1px dashed #CCCCCC;
+	font-style: italic;
+	margin-bottom:10px;
+	margin-top:10px;
+	padding:3px;
+}
+
+#content .admin table {
+	background: #fff;
+	border:1px solid #ccc;
+	color: #333;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+#content .admin th {
+	background: #f2f2f2;
+	color: #666666;
+	border: 1px solid #bbb;
+	border-top: 1px solid #fff;
+	border-left: 1px solid #fff;
+	text-align: center;
+}
+
+#content .admin th a {
+	background:#f2f2f2;
+	display: block;
+	padding: 2px 4px;
+	text-decoration: none;
+	color: #666666;
+}
+#content .admin a {
+	color: #666666;
+}
+
+#content .admin a:hover {
+	color: #000000;
+}
+
+#content .admin th a:hover {
+	background: #ccc;
+	color: #333;
+	text-decoration: none;
+}
+
+#content .admin table tr td {
+	background: #fff;
+	border-right: 1px solid #ccc;
+	padding: 4px;
+	text-align: center;
+	vertical-align: top;
+}
+
+#content .admin td.actions a {
+	margin: 0px 6px;
+}
+
+#content .admin .enable td {
+	background-color: #EEFECB;
+}
+
+#content .admin .disable td {
+	background-color:#FFF2F2;
+}
+
+#main_display tr {
+		margin-bottom: 5px;
+}
+
+/*************************************************
+******************* MESSAGES *********************
+*************************************************/
+.warning {
+	background-color: #FFF2F2;
+	border: 1px dashed #FF8A8A;
+	color: #FF3737;
+	font-size: 10px;
+	font-weight: bold;
+	margin: 0 0 10px 2px;
+	padding: 3px;
+	width: 568px;
+}
+
+#flashMessage {
+	background-color: #EEFECB;
+	border: 1px dashed #ADE13D;
+	color: #91BC33;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0 0 10px 2px;
+	padding: 3px;
+	width: auto;
+	text-align: center;
+}
+
+#flashMessage.error {
+	background-color: #FFF2F2;
+	border: 1px dashed #FF8A8A;
+	color: #FF3737;
+	font-size: 10px;
+	font-weight: bold;
+	margin: 0 0 10px 2px;
+	padding: 3px;
+	width: auto;
+	text-align: center;
+}
+
+
+.portDisabled {
+	background-color:#FFF2F2;
+	border:1px solid #FF8A8A;
+	color:#FF3737;
+	height:32px;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.portEnabled {
+	background-color:#EEFECB;
+	border:1px solid #ADE13D;
+	color:#91BC33;
+	height:32px;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+
+/*************************************************
+****************** ADD BUTTON ********************
+*************************************************/
+.addButton {
+	background-image: url(../img/main/background_option.png);
+	background-color: #F9F9F9;
+	border: 1px solid #666666;
+	color: #666666;
+	text-decoration: none;
+	padding: 2px 10px 2px 10px;
+}
+
+.addButton:hover {
+	background-image: url(../img/main/option_a_hover.png);
+	border: 1px solid #666666;
+	color: #333333;
+	text-decoration: none;
+	padding: 2px 10px 2px 10px;
+}
+
+.editButton {
+	background-image: url(../img/main/edit.png);
+	background-repeat:no-repeat;
+	background-color: #F9F9F9;
+	border: 1px dashed #CCCCCC;
+	font-weight:bold;
+	color: #666666;
+	text-decoration: none;
+	padding: 3px 5px 3px 18px;
+	margin: 0 0 0 2px;
+}
+
+.editButton:hover {
+	border: 1px solid #666666;
+}
+
+
+/*************************************************
+******************** QUOTAS **********************
+*************************************************/
+
+.quotas {
+	background-color:#F9F9F9;
+	background-repeat:no-repeat;
+	border:1px dashed #666666;
+	color:#666666;
+	margin:0 0 0 2px;
+	padding:2px 10px 2px 10px;
+}
+
+/*************************************************
+****************** PAGINATION ********************
+*************************************************/
+.paging {
+	background:#fff;
+	color: #000000;
+	margin: 0 0 10px 0;
+	font-style: italic;
+	font-size: 10px;
+	text-align: center;
+}
+
+.paging .disabled {
+	color: #666666;
+	display: inline;
+}
+
+/*************************************************
+******************** FOOTER **********************
+*************************************************/
+#footer {
+	background-image: url(../img/main/background_footer.png);
+	border: 1px solid #333333;
+	color: #FFFFFF;
+	font-size: 10px;
+	margin: 5px 0 2px 0;
+	padding: 5px 5px 5px 0;
+	text-align: right;
+}
+
+#footer a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+#footer a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+/*************************************************
+********************* FORMS **********************
+*************************************************/
+.form_part1 {
+	background-color: #FEFCF5;
+	border: 1px solid #FFE4CA;
+	height: 32px;
+	padding: 0 0 0 5px;
+	width: 210px;
+}
+
+.form_part2 {
+	background-color: #F9F9F9;
+	border: 1px solid #CCCCCC;
+	height: 32px;
+	padding: 0 0 0 5px;
+	width: 350px;
+}
+
+.form_part2 input {
+	border: 1px solid #999999;
+	margin: 0;
+	padding: 1px;
+}
+
+.form_part2 textarea {
+	border: 1px solid #999999;
+	margin: 0;
+	padding: 1px;
+}
+
+.form_part2 select {
+	border: 1px solid #999999;
+	margin: 0;
+	padding: 1px;
+	width: 230px;
+}
+
+input[type="submit"]:hover {
+	border: 1px solid #333333;
+	padding: 1px 0 1px 0;
+}
+
+input[type="submit"] {
+	background-image: url(../img/main/background_option.png);
+	border: 1px solid #999999;
+	margin: 5px 0 0 35px;
+	padding: 1px 0 1px 0;
+}
+
+.editOptions:hover {
+	border: 1px solid #333333;
+}
+
+.editOptions {
+	background-image: url(../img/main/background_option.png);
+	border: 1px solid #999999;
+	margin: 5px 0 0 30px;
+	padding: 3px 5px 3px 5px;
+	text-decoration: none;
+	color: #000000;
+}
+
+.error-message {
+	background-color: #FFF2F2;
+	border: 1px dashed #FF8A8A;
+	color: #FF3737;
+	font-size: 10px;
+	font-weight: bold;
+	margin: 5px 7px 5px 2px;
+
+
+}	
+
+/*************************************************
+********************* LEGEND *********************
+*************************************************/
+.legendTitle {
+	border-top: 1px dashed #999999;
+	border-left: 1px dashed #999999;
+	border-right: 1px dashed #999999;
+	color:#999999;
+	font-size:11px;
+	font-weight:bold;
+	margin-top: 10px;
+	padding: 2px 0 2px 10px;
+}
+.legend ul {
+	list-style-type: none;
+	color: #999999;
+	font-size: 10px;
+	font-weight: bold;
+	border:1px dashed #999999;
+	padding: 2px 0 2px 0;
+	margin: 0 0 5px 0;
+}
+
+.legend li {
+	padding: 2px 0 2px 10px;
+}
