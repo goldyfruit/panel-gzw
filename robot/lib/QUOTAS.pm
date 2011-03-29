@@ -19,7 +19,7 @@
 #
 package QUOTAS;			# Module Name.
 require Exporter;		# Load Exporter module.
-#use strict;			# Load strict module.
+use strict;			# Load strict module.
 use GZW;
 
 my $trafficLog = "/var/log/apache2/traffic.log";

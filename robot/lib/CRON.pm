@@ -18,27 +18,26 @@
 #
 package CRON;			# Module Name.
 require Exporter;		# Load Exporter module.
-use strict;				# Load strict module.
+use strict;			# Load strict module.
 
 sub CreateJob {
 
-
-	my $queryRobot = "SELECT * FROM robot ;";
+	my $queryRobot = "SELECT * FROM " . GZW::Prefix() . "robot ;";
 	my $executeCronRobot = GZW::Connection->prepare($queryRobot);
 	$executeCronRobot->execute();
 
-        while(my @arrayRobot = $executeCronRobot->fetchrow_array){
+        while(my $arrayRobot = $executeCronRobot->fetchrow_hashref){
 
 		###################################################
 		# CREATE CRON JOB.
 		###################################################
-		if (($arrayRobot['2'] eq "CRON") && ($arrayRobot['9'] eq "1")) {
+		if (($arrayRobot->{type} eq "CRON") && ($arrayRobot->{status} eq "1")) {
 
-			my $job = $arrayRobot['1'];
-			my $jobName = uc($arrayRobot['6']);
+			my $job = $arrayRobot->{data};
+			my $jobName = uc($arrayRobot->{tmp});
 
-			system "su - $arrayRobot['3'] -c '(crontab -l; echo -e \"#BEGIN CRON $jobName\n$job\n#END CRON $jobName\") | crontab -'";
-			my $queryUpdate = "UPDATE robot set status='0' WHERE data='$arrayRobot['1']' ;";
+			system "su - $arrayRobot->{user} -c '(crontab -l; echo -e \"#BEGIN CRON $jobName\n$job\n#END CRON $jobName\") | crontab -'";
+			my $queryUpdate = "UPDATE " . GZW::Prefix() . "robot set status='0' WHERE data='$arrayRobot->{data}' ;";
 			my $qupdate = GZW::Connection->prepare($queryUpdate);
 			$qupdate->execute();
 
@@ -52,21 +51,21 @@ sub CreateJob {
 
 sub DeleteJob {
 
-	my $queryRobot = "SELECT * FROM robot ;";
+	my $queryRobot = "SELECT * FROM " . GZW::Prefix() . "robot ;";
 	my $executeCronRobot = GZW::Connection->prepare($queryRobot);
 	$executeCronRobot->execute();
 
-	while(my @arrayRobot = $executeCronRobot->fetchrow_array){
+	while(my $arrayRobot = $executeCronRobot->fetchrow_hashref){
 
 		###################################################
 		# DELETE CRON JOB.
 		###################################################
-		if (($arrayRobot['2'] eq "CRON") && ($arrayRobot['9'] eq "2")) {
+		if (($arrayRobot->{type} eq "CRON") && ($arrayRobot->{status} eq "2")) {
 
-			my $jobName = uc($arrayRobot['1']);
+			my $jobName = uc($arrayRobot->{data});
 
-			system "su - $arrayRobot['3'] -c '(crontab -l | sed \"/#BEGIN CRON $jobName/,/#END CRON $jobName/d\") | crontab -'";
-			my $queryUpdate = "UPDATE robot set status='0' WHERE data='$arrayRobot['1']' ;";
+			system "su - $arrayRobot->{user} -c '(crontab -l | sed \"/#BEGIN CRON $jobName/,/#END CRON $jobName/d\") | crontab -'";
+			my $queryUpdate = "UPDATE " . GZW::Prefix() . "robot set status='0' WHERE data='$arrayRobot->{data}' ;";
 			my $qupdate = GZW::Connection->prepare($queryUpdate);
 			$qupdate->execute();
 
@@ -74,7 +73,7 @@ sub DeleteJob {
 
 	}
 
-	 $executeCronRobot->finish();
+	$executeCronRobot->finish();
 
 }
 

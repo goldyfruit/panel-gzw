@@ -18,9 +18,9 @@
 #
 package DNS;                    # Module Name.
 require Exporter;               # Load Exporter module.
-use Shell qw(cp cat chown);                     # Allow to use some Shell commands.
-use strict;                             # Load strict module.
-use File::Copy;
+use Shell qw(cp cat chown);	# Allow to use some Shell commands.
+use strict;			# Load strict module.
+use File::Copy;			# Load File module.
 
 my $rootDir = "/opt/panel-gzw/templates";
 my $tplVhost = "$rootDir/apache/vhost.tpl";
@@ -30,26 +30,25 @@ my $tplNamed = "$rootDir/bind/named.tpl";
 
 sub CreateDomainName {
 
-
-	my $queryRobot = "SELECT * FROM robot ;";
+	my $queryRobot = "SELECT * FROM " . GZW::Prefix() . "robot ;";
 	my $executeSqlRobot = GZW::Connection->prepare($queryRobot);
 	$executeSqlRobot->execute();
 
-        while(my @arrayRobot = $executeSqlRobot->fetchrow_array){
+        while(my $arrayRobot = $executeSqlRobot->fetchrow_hashref){
 
 		###################################################
 		# CREATE NEW DOMAIN.
 		###################################################
-		if (($arrayRobot['2'] eq "DOMAIN") && ($arrayRobot['9'] eq "1")) {
+		if (($arrayRobot->{type} eq "DOMAIN") && ($arrayRobot->{status} eq "1")) {
 
 			# Select all options from in the "options" table.
 			# This options will be used by the robot replace the TAGS in the zone, named templates, etc...
-			my $queryOptions = "SELECT * FROM options ;";
+			my $queryOptions = "SELECT * FROM " . GZW::Prefix() . "options ;";
 			my $executeOptions = GZW::Connection->prepare($queryOptions);
 			$executeOptions->execute();
 
 			# All options find in the "options" table are put in an array.
-			my @arrayOptions = $executeOptions->fetchrow_array;
+			my $arrayOptions = $executeOptions->fetchrow_hashref;
 
 			###################################################
 			# Apache Virtualhost.
@@ -63,18 +62,15 @@ sub CreateDomainName {
 			# Create an array with the "VHOST" contents ("/tmp/vhost.tpl").
 			my @arrayVhost = <VHOST>;
 
-			# TEMPORAIRE !!
-                        my $phpdir = "/srv/data/php5-fcgi/";
-
 			# Replace all TAGS presents in "/tmp/vhost.tpl" by the values of the "robot" table.
-			map {s/{{DOMAIN}}/$arrayRobot['1']/} @arrayVhost;
-			map {s/{{EMAIL}}/$arrayRobot['4']/} @arrayVhost;
-			map {s/{{ALIAS}}/www.$arrayRobot['1']/} @arrayVhost;
-			map {s/{{PATH}}/$arrayOptions['7']/} @arrayVhost;
-			map {s/{{LOG}}/$arrayOptions['45']/} @arrayVhost;
-			map {s/{{UID}}/$arrayRobot['3']/} @arrayVhost;
-			map {s/{{GID}}/$arrayRobot['3']/} @arrayVhost;
-			map {s/{{PHPDIR}}/$phpdir/} @arrayVhost;
+			map {s/{{DOMAIN}}/$arrayRobot->{data}/} @arrayVhost;
+			map {s/{{EMAIL}}/$arrayRobot->{email}/} @arrayVhost;
+			map {s/{{ALIAS}}/www.$arrayRobot->{data}/} @arrayVhost;
+			map {s/{{PATH}}/$arrayOptions->{path}/} @arrayVhost;
+			map {s/{{LOG}}/$arrayOptions->{logs_path}/} @arrayVhost;
+			map {s/{{UID}}/$arrayRobot->{user}/} @arrayVhost;
+			map {s/{{GID}}/$arrayRobot->{user}/} @arrayVhost;
+			map {s/{{PHPDIR}}/$arrayRobot->{phpcgi_path}/} @arrayVhost;
 
 			# Check all the file ("/tmp/vhost.tpl").
 			seek (VHOST, 0, 0);
@@ -86,7 +82,7 @@ sub CreateDomainName {
 			close VHOST;
 
 			# Put the contents of "/tmp/vhost.tpl" at the end of the Apache virtualhost.
-			cat("/tmp/vhost.tpl >> $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf");
+			cat("/tmp/vhost.tpl >> $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf");
 
 			###################################################
 			# Bind Zone.
@@ -98,17 +94,23 @@ sub CreateDomainName {
 			$year+=1900;
 			$month++;
 
-	        # If the day is less than 10 we put a 0.
-	        # Example : 6 become 06 
+	        	# If the day is less than 10 we put a 0.
+	        	# Example : 6 become 06 
 			if ($day < 10) {
 				$day = "0".$day;
+			}
+
+			# If the day is less than 10 we put a 0.
+			# Example : 6 become 06
+			if ($month < 10) {
+				$month = "0".$month;
 			}
 
 			# The serial is ready but we add "01", it's the first time that the zone is generate.
 			my $serial = $year.$month.$day."01";
 
 			# Replace "@" by "." (dot) in the admin email, it's necessary to put this email in the zone. 
-			my $contactDns = $arrayOptions['39'];
+			my $contactDns = $arrayOptions->{mail_admin};
 			$contactDns =~ s/@/./;
 
 			# Copy the "zone.tpl" file in the "/tmp" directory.
@@ -121,20 +123,20 @@ sub CreateDomainName {
 			my @arrayZone = <ZONE>;
 
 			# Replace all TAGS presents in "/tmp/zone.tpl" by the values of the "robot" and "options" tables.
-			map {s/{{DOMAIN}}/$arrayRobot['1']/} @arrayZone;
+			map {s/{{DOMAIN}}/$arrayRobot->{data}/} @arrayZone;
 			map {s/{{SERIAL}}/$serial/} @arrayZone;
 			map {s/{{CONTACT_DNS}}/$contactDns/} @arrayZone;
-			map {s/{{NS1}}/$arrayOptions['8']/} @arrayZone;
-			map {s/{{NS2}}/$arrayOptions['9']/} @arrayZone;
-			map {s/{{NS3}}/$arrayOptions['10']/} @arrayZone;
-			map {s/{{MX1}}/$arrayOptions['14']/} @arrayZone;
-			map {s/{{MX2}}/$arrayOptions['15']/} @arrayZone;
-			map {s/{{IPNS1}}/$arrayOptions['11']/} @arrayZone;
-			map {s/{{IPNS2}}/$arrayOptions['12']/} @arrayZone;
-			map {s/{{IPNS3}}/$arrayOptions['13']/} @arrayZone;
-			map {s/{{IPMX1}}/$arrayOptions['16']/} @arrayZone;
-			map {s/{{IPMX2}}/$arrayOptions['17']/} @arrayZone;
-			map {s/{{IPWEB}}/$arrayOptions['48']/} @arrayZone;
+			map {s/{{NS1}}/$arrayOptions->{ns1}/} @arrayZone;
+			map {s/{{NS2}}/$arrayOptions->{ns2}/} @arrayZone;
+			map {s/{{NS3}}/$arrayOptions->{ns3}/} @arrayZone;
+			map {s/{{MX1}}/$arrayOptions->{mx1}/} @arrayZone;
+			map {s/{{MX2}}/$arrayOptions->{mx2}/} @arrayZone;
+			map {s/{{IPNS1}}/$arrayOptions->{ipns1}/} @arrayZone;
+			map {s/{{IPNS2}}/$arrayOptions->{ipns2}/} @arrayZone;
+			map {s/{{IPNS3}}/$arrayOptions->{ipns3}/} @arrayZone;
+			map {s/{{IPMX1}}/$arrayOptions->{ipmx1}/} @arrayZone;
+			map {s/{{IPMX2}}/$arrayOptions->{ipmx2}/} @arrayZone;
+			map {s/{{IPWEB}}/$arrayOptions->{ip_web}/} @arrayZone;
 
 			# Check all the file ("/tmp/zone.tpl").
 			seek (ZONE, 0, 0);
@@ -148,7 +150,7 @@ sub CreateDomainName {
 			# Put the contents of "/tmp/zone.tpl" in a new file (zone).
 			# The file as the same name that the domain.
 			# Example : panel-gzw.com.conf
-			cat("/tmp/zone.tpl > $arrayOptions['18']$arrayRobot['1'].conf");
+			cat("/tmp/zone.tpl > $arrayOptions->{zone_path}$arrayRobot->{data}.conf");
 
 			###################################################
 			# Bind configuration file "named.conf"
@@ -163,9 +165,9 @@ sub CreateDomainName {
 			my @arrayNamed = <NAMED>;
 
 			# Replace all TAGS presents in "/tmp/named.tpl" by the values of the "robot" and "options" tables.
-			map {s/{{DOMAIN}}/$arrayRobot['1']/} @arrayNamed;
-			map {s/{{PATH_ZONE}}/$arrayOptions['18']/} @arrayNamed;
-			map {s/{{IPNS2}}/$arrayOptions['12']/} @arrayNamed;
+			map {s/{{DOMAIN}}/$arrayRobot->{data}/} @arrayNamed;
+			map {s/{{PATH_ZONE}}/$arrayOptions->{zone_path}/} @arrayNamed;
+			map {s/{{IPNS2}}/$arrayOptions->{ipns2}/} @arrayNamed;
 
 			# Check all the file ("/tmp/named.tpl").
 			seek (NAMED, 0, 0);
@@ -177,19 +179,19 @@ sub CreateDomainName {
 			close NAMED;
 
 			# Put the contents of "/tmp/named.tpl" at the end of the "named.conf"
-			cat("/tmp/named.tpl >> $arrayOptions['19']");
+			cat("/tmp/named.tpl >> $arrayOptions->{named_path}");
 
-			my $queryUpdate = "UPDATE robot set status='0' WHERE data='$arrayRobot['1']' ;";
+			my $queryUpdate = "UPDATE " . GZW::Prefix() . "robot set status='0' WHERE data='$arrayRobot->{data}' ;";
 			my $executeUpdate = GZW::Connection->prepare($queryUpdate);
 			$executeUpdate->execute();
 
 			# Create the directory of the new domain with 755 permissions.
-			my $domainDirectory = $arrayOptions['7'].$arrayRobot['3']."/websites/".$arrayRobot['1'];
+			my $domainDirectory = $arrayOptions->{path} . $arrayRobot->{user} . "/websites/" . $arrayRobot->{data};
 			mkdir $domainDirectory, 0755;
 
 			# Change the owner of the new directory.
-			my $uid = $arrayRobot['3'];
-			my $gid = $arrayRobot['3'];
+			my $uid = $arrayRobot->{user};
+			my $gid = $arrayRobot->{user};
 			chown $uid, $gid, $domainDirectory;
 
 			# Stop the SQL query.
@@ -203,31 +205,31 @@ sub CreateDomainName {
 
 sub DeleteDomainName {
 
-	my $queryRobot = "SELECT * FROM robot ;";
+	my $queryRobot = "SELECT * FROM " . GZW::Prefix() . "robot ;";
         my $executeSqlRobot = GZW::Connection->prepare($queryRobot);
         $executeSqlRobot->execute();
 
-        while(my @arrayRobot = $executeSqlRobot->fetchrow_array){
+        while(my $arrayRobot = $executeSqlRobot->fetchrow_hashref){
 
 		###################################################
 		# DELETE DOMAIN.
 		###################################################
-		if (($arrayRobot['2'] eq "DOMAIN") && ($arrayRobot['9'] eq "2")) {
+		if (($arrayRobot->{type} eq "DOMAIN") && ($arrayRobot->{status} eq "2")) {
 
 			# Select all options from in the "options" table.
 			# This options will be used by the robot replace the TAGS in the zone, named templates, etc...
-			my $queryOptions = "SELECT * FROM options ;";
+			my $queryOptions = "SELECT * FROM " . GZW::Prefix() . "options ;";
 			my $executeOptions = GZW::Connection->prepare($queryOptions);
 			$executeOptions->execute();
 
 			# All options find in the "options" table are put in an array.
-			my @arrayOptions = $executeOptions->fetchrow_array;
+			my $arrayOptions = $executeOptions->fetchrow_hashref;
 
 			###################################################
 			# Bind configuration file "named.conf"
 			###################################################
 			# Open in read the "named.conf" file in "/etc/bind/" directory.
-			open NAMED,"< $arrayOptions['19']" or die "[DELETE DOMAIN] Cannot open the file \"$arrayOptions['19']\" : $!\n";
+			open NAMED,"< $arrayOptions->{named_path}" or die "[DELETE DOMAIN] Cannot open the file \"$arrayOptions->{named_path}\" : $!\n";
 
 			# Create a file "named.conf" in "/tmp" directory.
 			# This file will be the new version of the "named.conf" after removing.
@@ -243,7 +245,7 @@ sub DeleteDomainName {
 				chomp($textNamed);
 
 				# More simple to use it in the regular expression.
-				my $domainName = $arrayRobot['1'];
+				my $domainName = $arrayRobot->{data};
 
 				# Regular expression that will remove the text between tags BEGIN *** and END ***.
 				$textNamed =~ s/\/\/BEGIN $domainName(.*?)\/\/END $domainName//sg;
@@ -261,28 +263,28 @@ sub DeleteDomainName {
 			close NAMED;
 
 			# Put the contents of "/tmp/named.conf" at the end of the "/etc/bind/named.conf"
-			cat("/tmp/named.conf > $arrayOptions['19']");
+			cat("/tmp/named.conf > $arrayOptions->{named_path}");
 
 			###################################################
 			# Bind Zone.
 			###################################################
 			# Delete the zone file.
-			my $zoneFile = $arrayOptions['18'].$arrayRobot['1'].".conf";
+			my $zoneFile = $arrayOptions->{zone_path} . $arrayRobot->{data} . ".conf";
 			unlink($zoneFile);
 
 			###################################################
 			# Apache Virtualhost.
 			###################################################
 			# More simple to use it in the regular expression.
-                   	my $domainName = $arrayRobot['1'];
+                   	my $domainName = $arrayRobot->{data};
 
 			# Delete the domain name from virtualhost and put the result in a temp file.
-			system "cat $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf | sed \"/#BEGIN $domainName/,/#END $domainName/d\" > /tmp/vhosts.conf";
+			system "cat $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf | sed \"/#BEGIN $domainName/,/#END $domainName/d\" > /tmp/vhosts.conf";
 
 			# Put the contents of "/tmp/vhosts.conf" at the end of the virtualhost "XXXXX.conf".
-                        cat("/tmp/vhosts.conf > $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf");
+                        cat("/tmp/vhosts.conf > $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf");
 
-			my $queryUpdate = "UPDATE robot set status='0' WHERE data='$arrayRobot['1']' ;";
+			my $queryUpdate = "UPDATE " . GZW::Prefix() . "robot set status='0' WHERE data='$arrayRobot->{data}' ;";
 			my $executeUpdate = GZW::Connection->prepare($queryUpdate);
 			$executeUpdate->execute();
 
@@ -298,46 +300,46 @@ sub DeleteDomainName {
 
 sub EditDomainName {
 
-	my $queryRobot = "SELECT * FROM robot ;";
+	my $queryRobot = "SELECT * FROM " . GZW::Prefix() . "robot ;";
         my $executeSqlRobot = GZW::Connection->prepare($queryRobot);
         $executeSqlRobot->execute();
 
-        while(my @arrayRobot = $executeSqlRobot->fetchrow_array){
+        while(my $arrayRobot = $executeSqlRobot->fetchrow_hashref){
 
 		###################################################
 		# EDIT DOMAIN.
 		###################################################
-		if (($arrayRobot['2'] eq "DOMAIN") && ($arrayRobot['9'] eq "3")) {
+		if (($arrayRobot->{type} eq "DOMAIN") && ($arrayRobot->{status} eq "3")) {
 
 			# Select all options from in the "options" table.
 			# This options will be used by the robot replace the TAGS in the zone, named templates, etc...
-			my $queryOptions = "SELECT * FROM options ;";
+			my $queryOptions = "SELECT * FROM " . GZW::Prefix() . "options ;";
 			my $executeOptions = GZW::Connection->prepare($queryOptions);
 			$executeOptions->execute();
 
 			# All options find in the "options" table are put in an array.
-			my @arrayOptions = $executeOptions->fetchrow_array;
+			my $arrayOptions = $executeOptions->fetchrow_hashref;
 
 			###################################################
 			# Bind configuration file "named.conf"
 			###################################################
 			# More simple to use it in the regular expression.
-                   	my $domainName = $arrayRobot['1'];
+                   	my $domainName = $arrayRobot->{data};
 
 			# Contain the old domain name.
-			my $oldDomainName = $arrayRobot['6'];
+			my $oldDomainName = $arrayRobot->{tmp};
 
 			# Edit the domain name from the named configuration and put the result in a temp file.
-			system "cat $arrayOptions['19'] | sed \"s/$oldDomainName/$domainName/g\" > /tmp/named.conf";
+			system "cat $arrayOptions->{named_path} | sed \"s/$oldDomainName/$domainName/g\" > /tmp/named.conf";
 
 			# Put the contents of "/tmp/named.conf" at the end of the "/etc/bind/named.conf"
-			cat("/tmp/named.conf > $arrayOptions['19']");
+			cat("/tmp/named.conf > $arrayOptions->{named_path}");
 
 			###################################################
 			# Bind Zone.
 			###################################################
 			# Delete the zone file.
-                        my $zoneFile = $arrayOptions['18'].$arrayRobot['6'].".conf";
+                        my $zoneFile = $arrayOptions->{zone_path} . $arrayRobot->{tmp} . ".conf";
 
 			# Edit the domain name from the named configuration and put the result in a temp file.
                         system "cat $zoneFile | sed \"s/$oldDomainName/$domainName/g\" > /tmp/zone.conf";
@@ -346,18 +348,18 @@ sub EditDomainName {
 			cat("/tmp/zone.conf > $zoneFile");
 
 			# Rename the zone.
-			move($arrayOptions['18'].$oldDomainName.".conf", $arrayOptions['18'].$domainName.".conf");
+			move($arrayOptions->{zone_path} . $oldDomainName . ".conf", $arrayOptions->{zone_path} . $domainName . ".conf");
 
 			###################################################
 			# Apache Virtualhost.
 			###################################################
 			# Edit the domain name from virtualhost and put the result in a temp file.
-			system "cat $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf | sed \"s/$oldDomainName/$domainName/g\" > /tmp/vhosts.conf";
+			system "cat $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf | sed \"s/$oldDomainName/$domainName/g\" > /tmp/vhosts.conf";
 
 			# Put the contents of "/tmp/vhosts.conf" at the end of the virtualhost "XXXXX.conf".
-                        cat("/tmp/vhosts.conf > $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf");
+                        cat("/tmp/vhosts.conf > $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf");
 
-			my $queryUpdate = "UPDATE robot set status='0' WHERE data='$arrayRobot['1']' ;";
+			my $queryUpdate = "UPDATE " . GZW::Prefix() . "robot set status='0' WHERE data='$arrayRobot->{data}' ;";
 			my $executeUpdate = GZW::Connection->prepare($queryUpdate);
 			$executeUpdate->execute();
 
@@ -371,24 +373,22 @@ sub EditDomainName {
 
 }
 
-
-
 sub CreateSubDomain {
 
-        my $queryRobot = "SELECT * FROM robot ;";
+        my $queryRobot = "SELECT * FROM " . GZW::Prefix() . "robot ;";
         my $executeSqlRobot = GZW::Connection->prepare($queryRobot);
         $executeSqlRobot->execute();
 
-        while(my @arrayRobot = $executeSqlRobot->fetchrow_array){
+        while(my $arrayRobot = $executeSqlRobot->fetchrow_hashref){
 
 		###################################################
 		# CREATE NEW SUBDOMAIN.
 		###################################################
-		if (($arrayRobot['2'] eq "SUBDOMAIN") && ($arrayRobot['9'] eq "1")) {
+		if (($arrayRobot->{type} eq "SUBDOMAIN") && ($arrayRobot->{status} eq "1")) {
 
 			# Select all options from in the "options" table.
 			# This options will be used by the robot replace the TAGS in the zone, named templates, etc...
-			my $queryOptions = "SELECT * FROM options ;";
+			my $queryOptions = "SELECT * FROM " . GZW::Prefix() . "options ;";
 			my $executeOptions = GZW::Connection->prepare($queryOptions);
 			$executeOptions->execute();
 
@@ -399,12 +399,18 @@ sub CreateSubDomain {
 			$year+=1900;
 			$month++;
 
-	        # If the day is less than 10 we put a 0.
-	        # Example : 6 become 06 
+	   		# If the day is less than 10 we put a 0.
+	        	# Example : 6 become 06 
 			if ($day < 10) {
 				$day = "0".$day;
 			}
-			
+
+			# If the day is less than 10 we put a 0.
+                        # Example : 6 become 06
+                        if ($month < 10) {
+                                $month = "0".$month;
+                        }
+
 			# Generate a random number for the serial
 			my $range = 100;
 			my $randomNumber = int(rand($range));
@@ -413,7 +419,7 @@ sub CreateSubDomain {
 			my $serial = $year.$month.$day.$randomNumber;
 
 			# All options find in the "options" table are put in an array.
-			my @arrayOptions = $executeOptions->fetchrow_array;
+			my $arrayOptions = $executeOptions->fetchrow_hashref;
 
 			# Copy the "vhost.tpl" file in the "/tmp" directory.
 			cp("$tplVhost /tmp");
@@ -428,15 +434,15 @@ sub CreateSubDomain {
 			my $phpdir = "/srv/data/php5-fcgi/";
 
 			# Replace all TAGS presents in "/tmp/vhost.tpl" by the values of the "robot" table.
-			map {s/{{DOMAIN}}/$arrayRobot['1']/} @arrayVhost;
-			map {s/{{EMAIL}}/$arrayRobot['4']/} @arrayVhost;
-			map {s/{{ALIAS}}/www.$arrayRobot['1']/} @arrayVhost;
-			map {s/{{PATH}}/$arrayOptions['7']/} @arrayVhost;
-			map {s/{{LOG}}/$arrayOptions['45']/} @arrayVhost;
-			map {s/{{UID}}/$arrayRobot['3']/} @arrayVhost;
-			map {s/{{GID}}/$arrayRobot['3']/} @arrayVhost;
-			map {s/{{PHPDIR}}/$phpdir/} @arrayVhost;
-			
+                        map {s/{{DOMAIN}}/$arrayRobot->{data}/} @arrayVhost;
+                        map {s/{{EMAIL}}/$arrayRobot->{email}/} @arrayVhost;
+                        map {s/{{ALIAS}}/www.$arrayRobot->{data}/} @arrayVhost;
+                        map {s/{{PATH}}/$arrayOptions->{path}/} @arrayVhost;
+                        map {s/{{LOG}}/$arrayOptions->{logs_path}/} @arrayVhost;
+                        map {s/{{UID}}/$arrayRobot->{user}/} @arrayVhost;
+                        map {s/{{GID}}/$arrayRobot->{user}/} @arrayVhost;
+                        map {s/{{PHPDIR}}/$arrayRobot->{phpcgi_path}/} @arrayVhost;
+
 			# Check all the file ("/tmp/vhost.tpl").
 			seek (VHOST, 0, 0);
 
@@ -447,10 +453,10 @@ sub CreateSubDomain {
 			close VHOST;
 
 			# Put the contents of "/tmp/vhost.tpl" at the end of the Apache virtualhost.
-			cat("/tmp/vhost.tpl >> $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf");
+			cat("/tmp/vhost.tpl >> $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf");
 
 			# Select the domain name from the ID.
-			my $queryDomainId = "SELECT name FROM domains WHERE id='$arrayRobot['5']' ;";
+			my $queryDomainId = "SELECT name FROM " . GZW::Prefix() . "domains WHERE id='$arrayRobot->{domain}' ;";
 			my $executeDomaineId = GZW::Connection->prepare($queryDomainId);
 			$executeDomaineId->execute();
 
@@ -467,8 +473,8 @@ sub CreateSubDomain {
 			my @arrayField = <FIELD>;
 
 			# Replace all TAGS presents in "/tmp/A_field.tpl" by the values of the "robot" and "options" tables.
-			map {s/{{SUBDOMAIN}}/$arrayRobot['1']/} @arrayField;
-			map {s/{{IPWEB}}/$arrayOptions['48']/} @arrayField;
+			map {s/{{SUBDOMAIN}}/$arrayRobot->{data}/} @arrayField;
+			map {s/{{IPWEB}}/$arrayOptions->{ip_web}/} @arrayField;
 
 			# Check all the file ("/tmp/A_field.tpl").
 			seek (FIELD, 0, 0);
@@ -480,19 +486,19 @@ sub CreateSubDomain {
 			close FIELD;
 
 			# Put the contents of "/tmp/A_field.tpl" at the end of zone.
-			cat("/tmp/A_field.tpl >> $arrayOptions['18']$arrayDomainId['0'].conf");
+			cat("/tmp/A_field.tpl >> $arrayOptions->{zone_path}$arrayDomainId['0'].conf");
 
-			my $queryUpdate = "UPDATE robot set status='0' WHERE data='$arrayRobot['1']' ;";
+			my $queryUpdate = "UPDATE " . GZW::Prefix() . "robot set status='0' WHERE data='$arrayRobot->{data}' ;";
 			my $executeUpdate = GZW::Connection->prepare($queryUpdate);
 			$executeUpdate->execute();
 
 			# Create the directory of the new subdomain with 755 permissions.
-			my $subdomainDirectory = $arrayOptions['7'].$arrayRobot['3']."/websites/".$arrayRobot['1'];
+			my $subdomainDirectory = $arrayOptions->{path} . $arrayRobot->{user} . "/websites/" . $arrayRobot->{data};
 			mkdir $subdomainDirectory, 0755;
 
 			# Change the owner of the new directory.
-                        my $uid = $arrayRobot['3'];
-                        my $gid = $arrayRobot['3'];
+                        my $uid = $arrayRobot->{user};
+                        my $gid = $arrayRobot->{user};
                         chown $uid, $gid, $subdomainDirectory;
 
 			# Stop the SQL queries.
@@ -508,25 +514,25 @@ sub CreateSubDomain {
 
 sub DeleteSubDomain {
 
-        my $queryRobot = "SELECT * FROM robot ;";
+        my $queryRobot = "SELECT * FROM " . GZW::Prefix() . "robot ;";
         my $executeSqlRobot = GZW::Connection->prepare($queryRobot);
         $executeSqlRobot->execute();
 
-        while(my @arrayRobot = $executeSqlRobot->fetchrow_array){
+        while(my $arrayRobot = $executeSqlRobot->fetchrow_hashref){
 
 		###################################################
 		# DELETE SUBDOMAIN.
 		###################################################
-		if (($arrayRobot['2'] eq "SUBDOMAIN") && ($arrayRobot['9'] eq "2")) {
+		if (($arrayRobot->{type} eq "SUBDOMAIN") && ($arrayRobot->{status} eq "2")) {
 
 			# Select all options from in the "options" table.
 			# This options will be used by the robot replace the TAGS in the zone, named templates, etc...
-			my $queryOptions = "SELECT * FROM options ;";
+			my $queryOptions = "SELECT * FROM " . GZW::Prefix() . "options ;";
 			my $executeOptions = GZW::Connection->prepare($queryOptions);
 			$executeOptions->execute();
 
 			# All options find in the "options" table are put in an array.
-			my @arrayOptions = $executeOptions->fetchrow_array;
+			my $arrayOptions = $executeOptions->fetchrow_hashref;
 
 			# Create the serial of the zone with the "localtime" function.
 			# We just use "$year", "$month" and "$day" variables.
@@ -535,12 +541,18 @@ sub DeleteSubDomain {
 			$year+=1900;
 			$month++;
 
-	        # If the day is less than 10 we put a 0.
-	        # Example : 6 become 06 
+	       	 	# If the day is less than 10 we put a 0.
+	        	# Example : 6 become 06 
 			if ($day < 10) {
 				$day = "0".$day;
 			}
-			
+
+			# If the day is less than 10 we put a 0.
+                        # Example : 6 become 06
+                        if ($month < 10) {
+                                $month = "0".$month;
+                        }
+
 			# Generate a random number for the serial
 			my $range = 100;
 			my $randomNumber = int(rand($range));
@@ -549,7 +561,7 @@ sub DeleteSubDomain {
 			my $serial = $year.$month.$day.$randomNumber;
 
 			# Select the domain name from the ID.
-			my $queryDomainId = "SELECT name FROM domains WHERE id='$arrayRobot['5']' ;";
+			my $queryDomainId = "SELECT name FROM " . GZW::Prefix() . "domains WHERE id='$arrayRobot->{domain}' ;";
 			my $executeDomaineId = GZW::Connection->prepare($queryDomainId);
 			$executeDomaineId->execute();
 
@@ -560,7 +572,7 @@ sub DeleteSubDomain {
 			# Bind zone file.
 			###################################################
 			# Open in read the zone file in "/var/cache/bind/" directory.
-			open ZONE,"< $arrayOptions['18']$arrayDomainId['0'].conf" or die "[DELETE SUBDOMAIN] Cannot open the file $arrayOptions['18']$arrayDomainId['0'].conf : $!\n";
+			open ZONE,"< $arrayOptions->{zone_path}$arrayDomainId['0'].conf" or die "[DELETE SUBDOMAIN] Cannot open the file $arrayOptions->{zone_path}$arrayDomainId['0'].conf : $!\n";
 
 			# Create a zone file in "/tmp" directory.
 			# This file will be the new version of the zone after removing.
@@ -576,7 +588,7 @@ sub DeleteSubDomain {
 				chomp($textZone);
 
 				# More simple to use it in the regular expression.
-				my $subdomainName = $arrayRobot['1'];
+				my $subdomainName = $arrayRobot->{data};
 
 				# Regular expression that will remove the text between tags BEGIN *** and END ***.
 				$textZone =~ s/;BEGIN $subdomainName(.*?);END $subdomainName//sg;
@@ -594,13 +606,13 @@ sub DeleteSubDomain {
 			close ZONE;
 
 			# Put the contents of "/tmp/named.conf" at the end of the "/etc/bind/named.conf"
-			cat("/tmp/$arrayDomainId['0'].conf > $arrayOptions['18']$arrayDomainId['0'].conf");
+			cat("/tmp/$arrayDomainId['0'].conf > $arrayOptions->{zone_path}$arrayDomainId['0'].conf");
 
 			###################################################
 			# Apache Virtualhost.
 			###################################################
 			# Open in read the "named.conf" file in "/etc/bind/" directory.
-			open VHOST,"< $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf" or die "[DELETE SUBDOMAIN] Cannot open the file \"$arrayOptions['44']\" : $!\n";
+			open VHOST,"< $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf" or die "[DELETE SUBDOMAIN] Cannot open the file \"$arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf\" : $!\n";
 
 			# Create a file "vhosts.conf" in "/tmp" directory.
 			# This file will be the new version of the "vhosts.conf" after removing.
@@ -616,7 +628,7 @@ sub DeleteSubDomain {
 				chomp($textVhost);
 
 				# More simple to use it in the regular expression.
-				my $subdomainName = $arrayRobot['1'];
+				my $subdomainName = $arrayRobot->{data};
 
 				# Regular expression that will remove the text between tags BEGIN *** and END ***.
 				$textVhost =~ s/#BEGIN $subdomainName(.*?)#END $subdomainName//sg;
@@ -634,9 +646,9 @@ sub DeleteSubDomain {
 			close VHOST;
 
 			# Put the contents of "/tmp/vhosts.conf" at the end of the "/etc/apache2/sites-available/vhosts.conf"
-			cat("/tmp/vhosts.conf >> $arrayOptions['44']apache2/virtualhosts/$arrayRobot['3'].conf");
+			cat("/tmp/vhosts.conf >> $arrayOptions->{vhost_path}apache2/virtualhosts/$arrayRobot->{user}.conf");
 
-			my $queryUpdate = "UPDATE robot set status='0' WHERE data='$arrayRobot['1']' ;";
+			my $queryUpdate = "UPDATE " . GZW::Prefix() . "robot set status='0' WHERE data='$arrayRobot->{data}' ;";
 			my $executeUpdate = GZW::Connection->prepare($queryUpdate);
 			$executeUpdate->execute();
 
@@ -652,3 +664,4 @@ sub DeleteSubDomain {
 
 }
 
+1;

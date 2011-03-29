@@ -1,6 +1,6 @@
 ##########################################################################
 # Panel-GZW is a web hosting panel for Unix/Linux platforms.
-# Copyright (C) 2005 - 2010  Gaëtan Trellu - goldyfruit@free.fr
+# Copyright (C) 2005 - 2011 Goldzone Web - gaetan.trellu@goldzoneweb.info 
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@
 ###########################################################################
 #
 package GZW;			# Module Name.
-use DBI;
+use DBI;			# Load DBI module.
 require Exporter;		# Load Exporter module.
-use strict;				# Load strict module.
+use strict;			# Load strict module.
 
 ###################################################
 # DATABASE INFORMATIONS.
@@ -28,7 +28,7 @@ my $database = "panel-gzw";
 my $prefix = "";
 my $host = "localhost";
 my $login = "root";
-my $password = "password";
+my $password = "****";
 
 # Function "connection", connect the daemon to the database.
 # In the script, this function is called by "GZW::Connection".
@@ -42,6 +42,8 @@ sub Connection {
 
 }
 
+# Function "prefix", use a database prefix if is set.
+# In the script, this function iss called by "GZW::Prefix".
 sub Prefix {
 
 	return $prefix;
