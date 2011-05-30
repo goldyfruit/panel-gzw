@@ -45,6 +45,9 @@ class UsersController extends AppController {
 	 */
 	var $uses = array('User', 'Option');
 
+	/**
+	 * Allow the "lostpassword" action if there is no login.
+	 */
 	function beforeFilter() {
 		$this->Auth->allow('lostPassword');
 		parent::beforeFilter();
