@@ -3,6 +3,10 @@ class RegistersController extends AppController {
 
 	var $name = 'Registers';
 
+    function beforeFilter() {
+            $this->Auth->allow('add','index');
+    }
+
 	function index() {
 		$this->Register->recursive = 0;
 		$this->set('registers', $this->paginate());
@@ -17,6 +21,8 @@ class RegistersController extends AppController {
 	}
 
 	function add() {
+		$this->layout = 'register';
+	
 		if (!empty($this->data)) {
 			$this->Register->create();
 			if ($this->Register->save($this->data)) {
@@ -26,6 +32,12 @@ class RegistersController extends AppController {
 				$this->Session->setFlash(__('The register could not be saved. Please, try again.', true));
 			}
 		}
+		
+		/**
+		 * Select all offers enabled.
+		 * @var array
+		 */
+		$this->set('offers', $this->Register->Offer->find('list'));
 	}
 
 	function edit($id = null) {

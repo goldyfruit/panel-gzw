@@ -22,11 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 echo $this->element('crons');
 
 /**
- * Call the "index" method in the "Options" controller. 
- */
-$options = $this->requestAction('options/index');
-
-/**
  * Select the panel path in "options" table.
  * @var string
  */

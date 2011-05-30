@@ -17,16 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * Call the "index" method in the "Options" controller. 
- */
-$options = $this->requestAction('options/index');
-
-/**
- * Call the "sqlVersion" method in the "Options" controller. 
- */
-$sqlVersion = $this->requestAction('options/sqlVersion');
-
-/**
  * Select the panel option to check new version in "options" table.
  * @var string
  */

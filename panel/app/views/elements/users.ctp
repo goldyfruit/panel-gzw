@@ -17,11 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * Call the "index" method in the "Options" controller. 
- */
-$options = $this->requestAction('options/index');
-
-/**
  * Select the state of the reset link account.
  * @var string
  */

@@ -28,12 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
- * Request the index methode in the module controller
- * @var string
- */
-$modules = $this->requestAction('modules/index');
-
-/**
  * If the resquest is set then we display the name of each modules enabled
  */
 if ($modules) {

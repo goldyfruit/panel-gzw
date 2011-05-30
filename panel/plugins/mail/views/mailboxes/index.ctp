@@ -50,6 +50,9 @@ echo $this->element('mails');
 				<span class="quotas">
 					<?php __d('mail', 'Mailboxes quotas'); ?> : <span class="highlight"><?php echo $quotas; ?></span>
 				</span>
+				<span class="help">
+					<?php echo $html->image('/img/main/help.png', array('url' => array('plugin' => NULL, 'controller' => 'infos', 'action' => 'summary'))); ?>
+				</span>
 				
 				<br /><br />
 

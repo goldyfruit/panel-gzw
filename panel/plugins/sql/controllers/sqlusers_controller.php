@@ -156,6 +156,22 @@ class SqlusersController extends AppController {
 				$this->Session->setFlash(__d('sql', 'The SQL user has not been saved.', true), 'default', array('class' => 'error'));
 			}
 		}
+		
+		/**
+		 * Select sql database(s) belongs to the user.
+		 * @var array
+		 */
+		$conditionDatabases = array('conditions' => array('Sqldata.user_id' => $this->Auth->user('id')));
+		$databases = $this->Sqluser->Sqldata->find('list', $conditionDatabases);
+
+		$conditionCount = array('conditions' => array('Sqldata.user_id' => $this->Auth->user('id')));
+		$databasesCount = $this->Sqluser->Sqldata->find('count', $conditionCount);
+
+		/**
+		 * Display databases.
+		 * $databases will be available in the view.
+		 */
+		$this->set(compact('databases', 'databasesCount'));
 
 	}
 

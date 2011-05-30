@@ -22,11 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 echo $this->element('supports');
 
 /**
- * Call the "index" method in the "Options" controller. 
- */
-$options = $this->requestAction('options/index');
-
-/**
  * Find all panel emails (admin, robot, abuse, business and support).
  * @var string
  */

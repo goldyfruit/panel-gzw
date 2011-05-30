@@ -175,6 +175,10 @@ echo $this->element('options');
 					<td class="form_part1"><?php __d('core', 'SQL server address'); ?></td>
 					<td class="form_part2"><?php echo $form->input('Option.sql_address', array('label' => false, 'size' => '31')); ?></td>
 				</tr>
+				<tr>
+					<td class="form_part1"><?php __d('core', 'Allow duplicate email addresses'); ?></td>
+					<td class="form_part2"><?php echo $form->radio('duplicate_email', array(__d('core', 'Yes', true), __d('core', 'No', true)), array('default' => 'No', 'legend' => false, 'separator' => '&nbsp&nbsp')); ?></td>
+				</tr>
 
 			</table>
 

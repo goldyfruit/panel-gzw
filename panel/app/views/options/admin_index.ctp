@@ -164,6 +164,10 @@ echo $this->element('options');
 					<td class="form_part1"><?php __d('core', 'SQL server address'); ?></td>
 					<td class="form_part2"><?php echo $text->autoLinkEmails($option['Option']['sql_address']); ?></td>
 				</tr>
+				<tr>
+					<td class="form_part1"><?php __d('core', 'Allow duplicate email addresses'); ?></td>
+					<td class="form_part2"><?php echo $status->display($option['Option']['duplicate_email']); ?></td>
+				</tr>
 
 			<?php endforeach; ?>
 

@@ -16,48 +16,33 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class Option extends AppModel {
-
-	/**
-	 * Model Name
-	 * @access public
-	 * @var string
-	 */
-	var $name = 'Option';
-
-	/**
-	 * Display the MySQL version.
-	 * @return array
-	 */
-	function sqlVersion() {
-
-		/**
-		 * Select MySQL version if this controller is called from a view (by example).
-		 * @return array
-		 */
-		$version = $this->query('SELECT version() AS v;');
-
-		return $version;
-
-	}
-
-	/**
-	 * Display an options list.
-	 * @return array
-	 */
-	function index() {
-
-		/**
-		 * Put all options in "options".
-		 * $options will be available in the view.
-		 */
-		$options = $this->find('all');
-
-		return $options;
-
-	}
-
-
-}
-
+/**
+ * Display the doctype.
+ */
+echo $html->docType('xhtml-strict');
 ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php
+		/**
+		 * Display the charset.
+		 */
+		echo $html->charset();
+		
+		/**
+		 * Select the CCS sheet.
+		 */
+		echo $html->css('register.css');
+		
+		/**
+		 * Display a favicon.
+		 */
+		echo $html->meta('icon', $html->url('/img/favicon.ico'));
+	?>
+	<title><?php __d('core', 'GoldZone Web - Register'); ?></title>
+</head>
+<body>
+        <?php echo $content_for_layout; ?>
+</body>
+</html>

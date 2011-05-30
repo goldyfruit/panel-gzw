@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Display the crontab options.
  */
 echo $this->element('sql');
-
+	
 ?>
 
 <div id="content">
@@ -50,6 +50,9 @@ echo $this->element('sql');
 				?>
 				<span class="quotas">
 					<?php __d('sql', 'SQL databases quotas'); ?> : <span class="highlight"><?php echo $quotas;?></span>
+				</span>
+				<span class="help">
+					<?php echo $html->image('/img/main/help.png', array('url' => array('plugin' => NULL, 'controller' => 'infos', 'action' => 'summary'))); ?>
 				</span>
 
 				<br /><br />

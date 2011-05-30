@@ -1,6 +1,6 @@
 <?php
 /*Panel-GZW is a web hosting panel for Unix/Linux platforms.
-Copyright (C) 2005 - 2010  GoldZone Web - gaetan.trellu@goldzoneweb.info 
+Copyright (C) 2005 - 2011  GoldZone Web - gaetan.trellu@goldzoneweb.info 
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

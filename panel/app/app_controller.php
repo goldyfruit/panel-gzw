@@ -51,17 +51,17 @@ class AppController extends Controller {
 			/**
 			 * Display the login page if the user is not logged.
 			 */
-			$this->Auth->loginAction = '/users/login';
+			$this->Auth->loginAction = array('plugin' => NULL, 'controller' => 'users', 'action' => 'login');
 
 			/**
 			 * Display the login page after disconnect. 
 			 */
-			$this->Auth->logoutRedirect = '/';
+			$this->Auth->logoutRedirect = array('plugin' => NULL, 'controller' => 'users', 'action' => 'login');
 			
 			/**
 			 * Redirect the user after authentification.
 			 */
-			$this->Auth->autoRedirect = true;
+			$this->Auth->autoRedirect = false;
 			
 			/**
 			 * Check if there are some actions in the controller.
@@ -81,7 +81,17 @@ class AppController extends Controller {
 		$this->_setLanguage();
 
 	}
- 
+
+	function beforeRender() {
+
+		if ($this->params['url']['url'] == '/') {
+			$this->set('sqlVersion', ClassRegistry::init('Option')->sqlVersion());
+		}
+		
+		$this->set('options', ClassRegistry::init('Option')->index());
+		$this->set('modules', ClassRegistry::init('Module')->index());
+	}
+
 	/**
 	 * Return "true" if the authentification successfuly.
 	 * @see cake/libs/controller/Controller#isAuthorized()

@@ -129,8 +129,8 @@ class User extends AppModel {
         		'rule' => 'email',
 				'message' => 'Adresse email non-valide.',
 			),
-			'unique' => array(
-				'rule' => 'isUnique',
+			'check' => array(
+				'rule' => 'checkUniqueEmail',
 				'message' => 'Adresse email déjà existante.'
 			),
 			'notEmpty' => array(
@@ -141,7 +141,7 @@ class User extends AppModel {
 
 		'address' => array(
 			'regex' => array(
-				'rule' => '/^[a-z0-9éèàêëûüäà -]{3,}$/i',
+				'rule' => '/^[a-z0-9éèàêëûüäà -,]{3,}$/i',
 				'message' => 'Adresse postale non-valide.'
 			),
 			'notEmpty' => array(
@@ -266,7 +266,7 @@ class User extends AppModel {
 	/**
 	 * This function compare two fields.
 	 * @param array $data
-	 * @return @return true or false
+	 * @return true or false
 	 */
 	function checkPasswords($data) {
 		if ($this->data[$this->name]['password'] && !isset($this->data[$this->name]['confirmPassword'])) {
@@ -277,6 +277,21 @@ class User extends AppModel {
 		}
 		else {
 			return false;
+		}
+	}
+
+	/**
+	 * This function check if two email address can be duplicate.
+	 * @param array $data
+	 * @return true or false
+	 */
+	function checkUniqueEmail() {
+		$uniqueStatus = ClassRegistry::init('Option')->index();
+		
+		if ($uniqueStatus['0']['Option']['duplicate_email'] != 0) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 

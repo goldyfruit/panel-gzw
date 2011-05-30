@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Display the sql options.
  */
 echo $this->element('sql');
- 
 ?>
 
 <div id="content">
@@ -63,7 +62,7 @@ echo $this->element('sql');
 			<table>
 				<tr>
 					<td class="form_part1"><?php __d('sql', 'SQL user name'); ?></td>
-					<td class="form_part2"><?php echo $form->input('Sqluser.name', array('label' => false, 'size' => '31', 'after' => '<span class="highlight" style="font-family: monospace;">@' . $session->read('Auth.User.name').'</span>')); ?></td>
+					<td class="form_part2"><?php echo $form->input('Sqluser.name', array('label' => false, 'size' => '31', 'after' => '<span class="highlight" style="font-family: monospace;">@' . $session->read('Auth.User.name') . '</span>')); ?></td>
 				</tr>
 				<tr>
 					<td class="form_part1"><?php __d('sql', 'SQL user password'); ?></td>
@@ -72,6 +71,31 @@ echo $this->element('sql');
 				<tr>
 					<td class="form_part1"><?php __d('sql', 'Confirm SQL user password'); ?></td>
 					<td class="form_part2"><?php echo $form->input('Sqluser.confirmPassword', array('label' => false, 'size' => '31', 'type' => 'password')); ?></td>
+				</tr>
+				<tr>
+					<td class="form_part1"><?php __d('sql', 'SQL database(s) available(s)'); ?></td>
+					<td class="form_part2"><?php
+												if (empty($databases)) {
+													echo $form->input('databases', array(
+														'type' => 'select',
+														'label' => false,
+														'empty' => array('none" selected="selected' => 'None'),
+														'after' => '<span class="highlight" style="font-family: monospace;">' . $databasesCount . '</span>')
+														
+													);
+												} else {
+													echo $form->input('databases', array(
+														'type' => 'select',
+														'label' => false,
+														'options' => $databases,
+														'empty' => array('none" selected="selected' => 'None'),
+														'after' => '<span class="highlight" style="font-family: monospace;">(' . $databasesCount . ')</span>')
+
+														
+													);
+												}
+											?>
+					</td>
 				</tr>
 				<tr>
 					<td class="form_part1"><?php __d('sql', 'Select the SQL engine'); ?></td>

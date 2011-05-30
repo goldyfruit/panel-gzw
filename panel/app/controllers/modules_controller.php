@@ -33,29 +33,6 @@ class ModulesController extends AppController {
 	var $helpers = array('Html', 'Form', 'Status');
 
 	/**
-	 * Display a modules list.
-	 * @return array
-	 */
-	function index() {
-
-		/**
-		 * Put all modules in "modules".
-		 * $modules will be available in the view.
-		 */
-		$this->set('modules', $this->Module->find('all'));
-		
-		/**
-		 * Select all modules if this controller is called from a view (by example).
-		 * @return array
-		 */
-		if(isset($this->params['requested'])) {
-			$modules = $this->Module->find('all');
-			return $modules;
-		}
-
-	}
-
-	/**
 	 * Display a modules list if the display is not set.
 	 * @return array
 	 */

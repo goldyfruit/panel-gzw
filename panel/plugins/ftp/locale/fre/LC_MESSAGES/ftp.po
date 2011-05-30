@@ -1,0 +1,413 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2011-05-03 16:31+0200\n"
+"PO-Revision-Date: 2011-05-03 17:06+0100\n"
+"Last-Translator: Gaëtan Trellu <gaetan.trellu@goldzoneweb.info>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /controllers/ftpusers_controller.php:181;587
+msgid "The directory specified does not exist."
+msgstr "Le répertoire de destination indiqué n'existe pas."
+
+#: /controllers/ftpusers_controller.php:260;272;828
+msgid "The FTP user has been saved."
+msgstr "L'utilisateur FTP a été sauvegardé avec succès."
+
+#: /controllers/ftpusers_controller.php:279;835
+msgid "The FTP user has not been saved."
+msgstr "L'utilisateur FTP n'a pas été créé."
+
+#: /controllers/ftpusers_controller.php:312;405;477;568
+msgid "Invalid FTP user."
+msgstr "Utilisateur FTP invalide."
+
+#: /controllers/ftpusers_controller.php:338;344;899
+msgid "The FTP user has been edited."
+msgstr "L'utilisateur FTP a été édité avec succès."
+
+#: /controllers/ftpusers_controller.php:351;906
+msgid "The FTP user has not been edited."
+msgstr "L'utilisateur n'a pas été édité."
+
+#: /controllers/ftpusers_controller.php:442;445;964
+msgid "The FTP user has been deleted."
+msgstr "L'utilisateur FTP a été supprimé avec succès."
+
+#: /controllers/ftpusers_controller.php:516;522
+msgid "The FTP user password has been changed."
+msgstr "Le mot de passe a été modifié avec succès."
+
+#: /controllers/ftpusers_controller.php:529
+msgid "The FTP user password has not been changed."
+msgstr "Le mot de passe n'a pas été modifié."
+
+#: /controllers/ftpusers_controller.php:610;616
+msgid "The FTP user homedir has been changed."
+msgstr "Le répertoire de destination a été modifié avec succès"
+
+#: /controllers/ftpusers_controller.php:623
+msgid "The FTP user homedir has not been changed."
+msgstr "Le répertoire de destination n'a pas été modifié."
+
+#: /controllers/ftpusers_controller.php:687;689;1004
+msgid "The FTP user has been disabled."
+msgstr "L'utilisateur FTP a été désactivé avec succès."
+
+#: /controllers/ftpusers_controller.php:747;749;1045
+msgid "The FTP user has been enabled."
+msgstr "L'utilisateur FTP a été activé avec succès."
+
+#: /controllers/ftpusers_controller.php:822
+msgid "FTP user added by ("
+msgstr "Utilisateur FTP ajouté par ("
+
+#: /controllers/ftpusers_controller.php:866;943
+msgid "Invalid FTP user"
+msgstr ""
+
+#: /controllers/ftpusers_controller.php:893
+msgid "FTP user edited by ("
+msgstr "Utilisateur FTP édité par ("
+
+#: /controllers/ftpusers_controller.php:962
+msgid "FTP user deleted by ("
+msgstr "Utilisateur FTP supprimé par ("
+
+#: /controllers/ftpusers_controller.php:1002
+msgid "FTP user disabled by ("
+msgstr "Utilisateur FTP désactivé par ("
+
+#: /controllers/ftpusers_controller.php:1043
+msgid "FTP user enabled by ("
+msgstr "Utilisateur FTP activé par ("
+
+#: /views/elements/ftp.ctp:20
+msgid "FTP Management."
+msgstr "Gestion FTP."
+
+#: /views/elements/ftp.ctp:27
+msgid "FTP users"
+msgstr ""
+
+#: /views/elements/ftp.ctp:33
+#: /views/ftpusers/admin_index.ctp:58
+#: /views/ftpusers/index.ctp:67
+msgid "Status"
+msgstr "Etat"
+
+#: /views/elements/ftp.ctp:39
+msgid "WebFTP"
+msgstr "WebFTP"
+
+#: /views/ftpusers/add.ctp:39
+#: /views/ftpusers/admin_status.ctp:28
+#: /views/ftpusers/edit.ctp:29
+#: /views/ftpusers/status.ctp:28
+msgid "FTP management."
+msgstr "Gestion des utilisateurs FTP."
+
+#: /views/ftpusers/add.ctp:41
+#: /views/ftpusers/admin_status.ctp:30
+#: /views/ftpusers/edit.ctp:31
+#: /views/ftpusers/status.ctp:30
+msgid ""
+"To transfer your site to the server an FTP user to be created. <br />\n"
+"\t\t\t\t\t\t\tIf you have multiple users it is possible to assign a directory specific to each."
+msgstr ""
+"Afin de pouvoir transférer votre site sur le serveur un utilisateur FTP doit être créé.<br />\n"
+"Si vous utilisez plusieurs utilisateurs il est possible de leur attribuer un répertoire de base spécifique à chacun."
+
+#: /views/ftpusers/add.ctp:79
+#: /views/ftpusers/admin_add.ctp:57
+#: /views/ftpusers/admin_edit.ctp:63
+#: /views/ftpusers/edit.ctp:64
+msgid "FTP user name"
+msgstr "Nom de l'utilisateur FTP"
+
+#: /views/ftpusers/add.ctp:83
+#: /views/ftpusers/admin_add.ctp:61
+#: /views/ftpusers/admin_edit.ctp:67
+msgid "FTP user password"
+msgstr "Mot de passe de l'utilisateur FTP"
+
+#: /views/ftpusers/add.ctp:84
+#: /views/ftpusers/password.ctp:60
+msgid "8 chars minimum"
+msgstr "8 lettres minimum"
+
+#: /views/ftpusers/add.ctp:87
+#: /views/ftpusers/admin_add.ctp:65
+#: /views/ftpusers/admin_edit.ctp:71
+#: /views/ftpusers/password.ctp:63
+msgid "Confirm FTP user password"
+msgstr "Confirmer le mot de passe"
+
+#: /views/ftpusers/add.ctp:91
+#: /views/ftpusers/admin_add.ctp:77
+#: /views/ftpusers/admin_edit.ctp:83
+#: /views/ftpusers/homedir.ctp:81
+msgid "FTP user homedir"
+msgstr "Répertoire de destination"
+
+#: /views/ftpusers/add.ctp:95
+#: /views/ftpusers/admin_add.ctp:85
+#: /views/ftpusers/admin_edit.ctp:91
+msgid "Enable the FTP user"
+msgstr "Activer l'utilisateur FTP"
+
+#: /views/ftpusers/add.ctp:96
+#: /views/ftpusers/admin_add.ctp:86
+#: /views/ftpusers/admin_edit.ctp:92
+msgid "Yes"
+msgstr "Oui"
+
+#: /views/ftpusers/add.ctp:96
+#: /views/ftpusers/admin_add.ctp:86
+#: /views/ftpusers/admin_edit.ctp:92
+msgid "No"
+msgstr "Non"
+
+#: /views/ftpusers/add.ctp:99
+#: /views/ftpusers/admin_add.ctp:90
+msgid "Create the FTP user"
+msgstr "Créer l'utilisateur FTP"
+
+#: /views/ftpusers/add.ctp:103
+msgid "Do not enter special characters, they will not be accepted. Remember to visit the information page."
+msgstr "Ne saisissez pas de caractères spéciaux pour le nom de l'utilisateur FTP. Pensez aussi à jeter un oeil à la page d'informations."
+
+#: /views/ftpusers/admin_add.ctp:53
+#: /views/ftpusers/admin_edit.ctp:59
+msgid "Users list"
+msgstr ""
+
+#: /views/ftpusers/admin_add.ctp:69
+#: /views/ftpusers/admin_edit.ctp:75
+msgid "Member UID"
+msgstr ""
+
+#: /views/ftpusers/admin_add.ctp:73
+#: /views/ftpusers/admin_edit.ctp:79
+msgid "Member GID"
+msgstr ""
+
+#: /views/ftpusers/admin_add.ctp:81
+#: /views/ftpusers/admin_edit.ctp:87
+msgid "FTP user shell"
+msgstr ""
+
+#: /views/ftpusers/admin_edit.ctp:96
+#: /views/ftpusers/edit.ctp:69
+msgid "Edit the FTP user"
+msgstr "Editer l'utilisateur FTP"
+
+#: /views/ftpusers/admin_index.ctp:28
+msgid "FTP users management."
+msgstr ""
+
+#: /views/ftpusers/admin_index.ctp:30
+msgid ""
+"This is a list of all FTP users availables on the platform. <br />\n"
+"\t\t\t\t\t\t\t\tYou can do everything you want with these users (add, edit, delete, etc...)."
+msgstr ""
+
+#: /views/ftpusers/admin_index.ctp:45
+msgid "Add a new FTP user"
+msgstr ""
+
+#: /views/ftpusers/admin_index.ctp:51
+msgid "user_id"
+msgstr ""
+
+#: /views/ftpusers/admin_index.ctp:52
+#: /views/ftpusers/admin_status.ctp:47
+#: /views/ftpusers/index.ctp:63
+#: /views/ftpusers/status.ctp:47
+msgid "Name"
+msgstr "Nom"
+
+#: /views/ftpusers/admin_index.ctp:53
+msgid "Uid"
+msgstr "UID"
+
+#: /views/ftpusers/admin_index.ctp:54
+msgid "Gid"
+msgstr "GID"
+
+#: /views/ftpusers/admin_index.ctp:55
+#: /views/ftpusers/admin_status.ctp:51
+#: /views/ftpusers/index.ctp:64;98
+#: /views/ftpusers/status.ctp:49
+msgid "Homedir"
+msgstr "Destination"
+
+#: /views/ftpusers/admin_index.ctp:56
+msgid "Shell"
+msgstr "Shell"
+
+#: /views/ftpusers/admin_index.ctp:57
+#: /views/ftpusers/index.ctp:65
+msgid "Created"
+msgstr "Date de création"
+
+#: /views/ftpusers/admin_index.ctp:59
+#: /views/ftpusers/index.ctp:68
+msgid "Actions"
+msgstr "Actions"
+
+#: /views/ftpusers/admin_index.ctp:90
+#: /views/ftpusers/index.ctp:91
+msgid "Edit"
+msgstr "Editer"
+
+#: /views/ftpusers/admin_index.ctp:92
+#: /views/ftpusers/index.ctp:93
+msgid "Delete"
+msgstr "Supprimer"
+
+#: /views/ftpusers/admin_index.ctp:93
+#: /views/ftpusers/index.ctp:94
+msgid "Do you really want delete this FTP user ?"
+msgstr "Etes-vous de vouloir supprimer cet utilisateur FTP ?"
+
+#: /views/ftpusers/admin_index.ctp:111
+#: /views/ftpusers/index.ctp:114
+msgid "Options description :"
+msgstr "Descriptions des options :"
+
+#: /views/ftpusers/admin_index.ctp:114
+#: /views/ftpusers/index.ctp:117
+msgid "Edit the FTP user."
+msgstr "Editer un utilisateur FTP."
+
+#: /views/ftpusers/admin_index.ctp:115
+#: /views/ftpusers/index.ctp:118
+msgid "Delete the FTP user."
+msgstr "Supprimer un utilisateur FTP."
+
+#: /views/ftpusers/admin_index.ctp:116
+#: /views/ftpusers/index.ctp:121
+msgid "Enable the FTP user."
+msgstr "Activer un utilisateur FTP."
+
+#: /views/ftpusers/admin_index.ctp:117
+#: /views/ftpusers/index.ctp:122
+msgid "Disable the FTP user."
+msgstr "Désactiver un utilisateur FTP."
+
+#: /views/ftpusers/admin_status.ctp:48
+msgid "UID"
+msgstr ""
+
+#: /views/ftpusers/admin_status.ctp:49
+msgid "GID"
+msgstr ""
+
+#: /views/ftpusers/admin_status.ctp:50
+#: /views/ftpusers/status.ctp:48
+msgid "Count"
+msgstr "Nombre de connexion"
+
+#: /views/ftpusers/admin_status.ctp:52
+#: /views/ftpusers/status.ctp:50
+msgid "Accessed"
+msgstr "Dernière connexion"
+
+#: /views/ftpusers/admin_status.ctp:53
+#: /views/ftpusers/index.ctp:66
+#: /views/ftpusers/status.ctp:51
+msgid "Modified"
+msgstr "Dernière modification"
+
+#: /views/ftpusers/admin_status.ctp:95
+#: /views/ftpusers/status.ctp:87
+msgid "In case of inconsistencies that may mean that a third person has access to your web space."
+msgstr "S'il y a une incohérence au niveau des stats FTP, cela signifie peut-être qu'une tierce personne accède à votre comtpe sans votre accord."
+
+#: /views/ftpusers/edit.ctp:73
+msgid "All special characters will be replaced by their equivalents for the \"FTP user name\" (é by e, à by a, space by -, etc...)."
+msgstr "Tous les caractères spéciaux seront remplacés par leurs équivalents pour le champ \"Nom de l'utilisateur FTP\" (é par e, à par a, espace par _, etc...)."
+
+#: /views/ftpusers/homedir.ctp:39
+#: /views/ftpusers/index.ctp:120
+msgid "Change the FTP user homedir."
+msgstr "Changer le répertoire de destination de l'utilisateur FTP."
+
+#: /views/ftpusers/homedir.ctp:41
+msgid ""
+"It is possible to change the homedir for each of your FTP users.<br />\n"
+"\t\t\t\t\t\t\t\tBy doing so users have a different homedir of your own and have no access to your data."
+msgstr ""
+
+#: /views/ftpusers/homedir.ctp:49
+msgid "To point the user in the root directory let (/) in the \"FTP user homedir\"."
+msgstr "Pour faire pointer l'utilisateur à la racine laissez le (/) dans le champ \"Répertoire de destination\"."
+
+#: /views/ftpusers/homedir.ctp:87
+msgid "Change the homedir"
+msgstr "Changer le répertoire de destination"
+
+#: /views/ftpusers/homedir.ctp:91
+msgid "The destination folder must exist before confirming the change."
+msgstr ""
+
+#: /views/ftpusers/index.ctp:29
+msgid "FTP user management."
+msgstr "Gestion des utilisateurs FTP."
+
+#: /views/ftpusers/index.ctp:31
+msgid ""
+"To transfer your site to the server an FTP user to be created. <br />\n"
+"\t\t\t\t\t\t\t\tIf you have multiple users it is possible to assign a directory specific to each."
+msgstr ""
+
+#: /views/ftpusers/index.ctp:49
+msgid "Add a FTP user"
+msgstr "Ajouter un utilisateur FTP"
+
+#: /views/ftpusers/index.ctp:53
+msgid "FTP users quotas"
+msgstr "Quotas des utilisateurs FTP"
+
+#: /views/ftpusers/index.ctp:97
+msgid "Password"
+msgstr "Mot de passe"
+
+#: /views/ftpusers/index.ctp:119
+msgid "Change the FTP user password."
+msgstr "Changer le mot de passe de l'utilisateur FTP."
+
+#: /views/ftpusers/password.ctp:28
+msgid "Change FTP user password."
+msgstr ""
+
+#: /views/ftpusers/password.ctp:30
+msgid ""
+"This change affects only the password of FTP user selected. <br />\n"
+"\t\t\t\t\t\t\t\tA good password is a password that contains letters, numbers, uppercase"
+msgstr ""
+
+#: /views/ftpusers/password.ctp:56
+msgid "Never give your password to an another person."
+msgstr "Ne jamais divulger votre mot de passe à une tierce personne."
+
+#: /views/ftpusers/password.ctp:59
+msgid "New FTP user password"
+msgstr "Nouveau de mot de passe"
+
+#: /views/ftpusers/password.ctp:68
+msgid "Change the FTP user password"
+msgstr ""
+
+#: /views/ftpusers/password.ctp:72
+msgid "Check that the locking is not capitalized on."
+msgstr "Assurez-vous que la touche \"Verrouillage majuscule\" ne soit pas activée. "
+

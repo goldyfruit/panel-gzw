@@ -1,0 +1,272 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2011-05-03 16:25+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /controllers/registers_controller.php:20;40;75;95
+msgid "Invalid register"
+msgstr ""
+
+#: /controllers/registers_controller.php:30;45;85;100
+msgid "The register has been saved"
+msgstr ""
+
+#: /controllers/registers_controller.php:33;48;88;103
+msgid "The register could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/registers_controller.php:58;113
+msgid "Invalid id for register"
+msgstr ""
+
+#: /controllers/registers_controller.php:62;117
+msgid "Register deleted"
+msgstr ""
+
+#: /controllers/registers_controller.php:65;120
+msgid "Register was not deleted"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:2
+msgid "Logs"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:6
+#: /views/registers/admin_index.ctp:59
+#: /views/registers/index.ctp:59
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:17
+#: /views/registers/add.ctp:26
+#: /views/registers/admin_add.ctp:26
+#: /views/registers/admin_edit.ctp:27
+#: /views/registers/admin_index.ctp:21;71
+#: /views/registers/admin_view.ctp:87
+#: /views/registers/edit.ctp:27
+#: /views/registers/index.ctp:21;71
+#: /views/registers/view.ctp:87
+msgid "Actions"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:47
+#: /views/registers/admin_index.ctp:49
+#: /views/registers/index.ctp:49
+msgid "View"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:48
+#: /views/registers/admin_index.ctp:50
+#: /views/registers/index.ctp:50
+msgid "Edit"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:49
+#: /views/registers/admin_edit.ctp:30
+#: /views/registers/admin_index.ctp:51
+#: /views/registers/edit.ctp:30
+#: /views/registers/index.ctp:51
+msgid "Delete"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:49
+#: /views/registers/admin_edit.ctp:30
+#: /views/registers/admin_index.ctp:51
+#: /views/registers/admin_view.ctp:90
+#: /views/registers/edit.ctp:30
+#: /views/registers/index.ctp:51
+#: /views/registers/view.ctp:90
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:56
+#: /views/registers/admin_index.ctp:64
+#: /views/registers/index.ctp:64
+msgid "previous"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:58
+#: /views/registers/admin_index.ctp:67
+#: /views/registers/index.ctp:67
+msgid "next"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:62
+msgid "New Log"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:63
+msgid "List Users"
+msgstr ""
+
+#: /views/logs/admin_index.ctp:64
+msgid "New User"
+msgstr ""
+
+#: /views/quotas/admin_add.ctp:4
+msgid "Add Quota"
+msgstr ""
+
+#: /views/quotas/admin_add.ctp:23
+msgid "List Quotas"
+msgstr ""
+
+#: /views/quotas/admin_add.ctp:24
+msgid "List Offers"
+msgstr ""
+
+#: /views/quotas/admin_add.ctp:25
+msgid "New Offer"
+msgstr ""
+
+#: /views/registers/add.ctp:4
+msgid "Add Register"
+msgstr ""
+
+#: /views/registers/add.ctp:23
+#: /views/registers/admin_add.ctp:23
+#: /views/registers/admin_edit.ctp:24
+#: /views/registers/edit.ctp:24
+msgid "Submit"
+msgstr ""
+
+#: /views/registers/add.ctp:29
+#: /views/registers/admin_add.ctp:29
+#: /views/registers/admin_edit.ctp:31
+#: /views/registers/admin_view.ctp:91
+#: /views/registers/edit.ctp:31
+#: /views/registers/view.ctp:91
+msgid "List Registers"
+msgstr ""
+
+#: /views/registers/admin_add.ctp:4
+msgid "Admin Add Register"
+msgstr ""
+
+#: /views/registers/admin_edit.ctp:4
+msgid "Admin Edit Register"
+msgstr ""
+
+#: /views/registers/admin_index.ctp:2
+#: /views/registers/index.ctp:2
+msgid "Registers"
+msgstr ""
+
+#: /views/registers/admin_index.ctp:73
+#: /views/registers/admin_view.ctp:92
+#: /views/registers/index.ctp:73
+#: /views/registers/view.ctp:92
+msgid "New Register"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:2
+#: /views/registers/view.ctp:2
+msgid "Register"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:4
+#: /views/registers/view.ctp:4
+msgid "Id"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:9
+#: /views/registers/view.ctp:9
+msgid "Lastname"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:14
+#: /views/registers/view.ctp:14
+msgid "Firstname"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:19
+#: /views/registers/view.ctp:19
+msgid "Website"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:24
+#: /views/registers/view.ctp:24
+msgid "Mail"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:29
+#: /views/registers/view.ctp:29
+msgid "Offers"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:34
+#: /views/registers/view.ctp:34
+msgid "Phone"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:39
+#: /views/registers/view.ctp:39
+msgid "Address"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:44
+#: /views/registers/view.ctp:44
+msgid "Zipcode"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:49
+#: /views/registers/view.ctp:49
+msgid "City"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:54
+#: /views/registers/view.ctp:54
+msgid "Country"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:59
+#: /views/registers/view.ctp:59
+msgid "Registered"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:64
+#: /views/registers/view.ctp:64
+msgid "Newsletter"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:69
+#: /views/registers/view.ctp:69
+msgid "IdTransaction"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:74
+#: /views/registers/view.ctp:74
+msgid "HipayAccount"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:79
+#: /views/registers/view.ctp:79
+msgid "Validated"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:89
+#: /views/registers/edit.ctp:4
+#: /views/registers/view.ctp:89
+msgid "Edit Register"
+msgstr ""
+
+#: /views/registers/admin_view.ctp:90
+#: /views/registers/view.ctp:90
+msgid "Delete Register"
+msgstr ""
+
+#: /webroot/test.php:88
+msgid "Debug setting does not allow access to this url."
+msgstr ""
+

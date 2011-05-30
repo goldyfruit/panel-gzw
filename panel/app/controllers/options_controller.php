@@ -33,46 +33,6 @@ class OptionsController extends AppController {
 	var $helpers = array('Html', 'Form', 'Text', 'Status');
 
 	/**
-	 * Display an options list.
-	 * @return array
-	 */
-	function index() {
-
-		/**
-		 * Put all options in "options".
-		 * $options will be available in the view.
-		 */
-		$this->set('options', $this->Option->find('all'));
-
-		/**
-		 * Select all options if this controller is called from a view (by example).
-		 * @return array
-		 */
-		if(isset($this->params['requested'])) {
-			$options = $this->Option->find('all');
-			return $options;
-		}
-
-	}
-
-	/**
-	 * Display the MySQL version.
-	 * @return array
-	 */
-	function sqlVersion() {
-
-		/**
-		 * Select MySQL version if this controller is called from a view (by example).
-		 * @return array
-		 */
-		if(isset($this->params['requested'])) {
-			$version = $this->Option->query('SELECT version() AS v;');
-			return $version;
-		}
-
-	}
-
-	/**
 	 * This function display an options list.
 	 * @return array
 	 */

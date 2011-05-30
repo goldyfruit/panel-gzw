@@ -17,11 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * Call the "index" method in the "Options" controller. 
- */
-$options = $this->requestAction('options/index');
-
-/**
  * Select the panel version in "options" table.
  * @var string
  */
@@ -43,7 +38,6 @@ $profileId = $session->read('Auth.User.profile_id');
  * Display the doctype.
  */
 echo $html->docType('xhtml-strict');
-$displayModule = 'NO';
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -73,7 +67,7 @@ $displayModule = 'NO';
 	<div class="title"><?php echo __d('core', 'Web hosting management', true) . ' ' . $options['0']['Option']['name']; ?>
 		<div class="infos">
 			<?php echo __d('core', 'Logged as <strong>', true) . ' ' . $session->read('Auth.User.firstname'); ?></strong><br/>
-			<?php __d('core', 'Last connection at '); ?>
+			<?php echo __d('core', 'Last connection at ', true) . $session->read('lastLogin.User.last_time'); ?>
 		</div>
 	</div>
 </div>

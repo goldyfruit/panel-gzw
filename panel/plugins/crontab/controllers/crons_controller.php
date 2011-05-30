@@ -139,7 +139,7 @@ class CronsController extends AppController {
 				 * Can become :
 				 * 		00 00 * * * gzw-000002 php -c /srv/data/php5-fcgi/gzw-000002/php.ini /srv/data/gzw-000002/cron/task1.php
 				 */
-				$taskData = $this->data['Cron']['type'] . ' ' . $this->Auth->user('name') . ' php -c '. $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $this->Auth->user('name') . '/php.ini ' . $this->data['Cron']['panelPath'] . $this->Auth->user('name') . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
+				$taskData = $this->data['Cron']['type'] . ' php -c '. $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $this->Auth->user('name') . '/php.ini ' . $this->data['Cron']['panelPath'] . $this->Auth->user('name') . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
 				$this->Robot->insert($taskData, 'CRON', $this->Auth->user('name'), $this->Auth->user('email'), NULL, $this->data['Cron']['name'], 1);
 
 				/**
@@ -224,7 +224,7 @@ class CronsController extends AppController {
 				 * Can become :
 				 * 		00 00 * * * gzw-000002 php -c /srv/data/php5-fcgi/gzw-000002/php.ini /srv/data/gzw-000002/cron/task1.php
 				 */
-				$taskData = $this->data['Cron']['type'] . ' ' . $this->Auth->user('name') . ' php -c '. $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $this->Auth->user('name') . '/php.ini ' . $this->data['Cron']['panelPath'] . $this->Auth->user('name') . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
+				$taskData = $this->data['Cron']['type'] . ' php -c '. $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $this->Auth->user('name') . '/php.ini ' . $this->data['Cron']['panelPath'] . $this->Auth->user('name') . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
 
 				/**
 				 * Insert the edit action in the "logs" table.
@@ -517,7 +517,7 @@ class CronsController extends AppController {
 				 * Can become :
 				 * 		00 00 * * * gzw-000002 php -c /srv/data/php5-fcgi/gzw-000002/php.ini /srv/data/gzw-000002/cron/task1.php
 				 */
-				$taskData = $this->data['Cron']['type'] . ' ' . $queryUserId['User']['name'] . ' php -c ' . $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $queryUserId['User']['name'] . '/php.ini ' . $this->data['Cron']['panelPath'] . $queryUserId['User']['name'] . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
+				$taskData = $this->data['Cron']['type'] . ' php -c ' . $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $queryUserId['User']['name'] . '/php.ini ' . $this->data['Cron']['panelPath'] . $queryUserId['User']['name'] . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
 				$this->Robot->insert($taskData, 'CRON', $queryUserId['User']['name'], $queryUserId['User']['email'], NULL, $this->data['Cron']['name'], 1);
 
 				/**
@@ -602,7 +602,7 @@ class CronsController extends AppController {
 				 * Can become :
 				 * 		00 00 * * * gzw-000002 php -c /srv/data/php5-fcgi/gzw-000002/php.ini /srv/data/gzw-000002/cron/task1.php
 				 */
-				$taskData = $this->data['Cron']['type'] . ' ' . $queryUserId['User']['name'] . ' php -c ' . $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $queryUserId['User']['name'] . '/php.ini ' . $this->data['Cron']['panelPath'] . $queryUserId['User']['name'] . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
+				$taskData = $this->data['Cron']['type'] . ' php -c ' . $this->data['Cron']['panelPath'] . 'php5-fcgi/' . $queryUserId['User']['name'] . '/php.ini ' . $this->data['Cron']['panelPath'] . $queryUserId['User']['name'] . '/cron/' . $this->data['Cron']['path'] . ' > /var/log/panel-gzw/crons.log';
 				$this->Robot->insert($taskData, 'CRON', $queryUserId['User']['name'], $queryUserId['User']['email'], NULL, $this->data['Cron']['name'], 3);
 
 				/**

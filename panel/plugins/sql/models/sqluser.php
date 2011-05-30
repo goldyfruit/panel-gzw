@@ -34,6 +34,16 @@ class Sqluser extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	var $hasMany = array(
+		'Sqldata' => array(
+			'className' => 'Sqldata',
+			'foreignKey' => 'sqluser_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
 
 	/*************************************************************************
 	 * 								VALIDATE

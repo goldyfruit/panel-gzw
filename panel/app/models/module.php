@@ -1,6 +1,6 @@
 <?php
 /*Panel-GZW is a web hosting panel for Unix/Linux platforms.
-Copyright (C) 2005 - 2009  Gaëtan Trellu - goldyfruit@free.fr
+Copyright (C) 2005 - 2011  GoldZone Web - gaetan.trellu@goldzoneweb.info
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,22 @@ class Module extends AppModel {
 	 * @var string
 	 */
 	var $name = 'Module';
+
+	/**
+	 * Display a modules list.
+	 * @return array
+	 */
+	function index() {
+
+		/**
+		 * Put all modules in "modules".
+		 * $modules will be available in the view.
+		 */
+		$modules = $this->find('all');
+
+		return $modules;
+
+	}
 
 }
 

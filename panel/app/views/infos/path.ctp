@@ -21,10 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 echo $this->element('infos');
 
-/**
- * Call the "index" method in the "Options" controller. 
- */
-$options = $this->requestAction('options/index');
 ?>
 
 <div id="content">

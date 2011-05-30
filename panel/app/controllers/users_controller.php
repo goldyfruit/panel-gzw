@@ -37,7 +37,7 @@ class UsersController extends AppController {
 	 * @access public
 	 * @var array
 	 */
-	var $components = array('Quota', 'Maintenance', 'Check', 'Robot', 'Logs');
+	var $components = array('Quota', 'Maintenance', 'Check', 'Robot', 'Logs', 'Email');
 
 	/**
 	 * The "users" controller use the "user" and "option" models.
@@ -45,11 +45,32 @@ class UsersController extends AppController {
 	 */
 	var $uses = array('User', 'Option');
 
+	function beforeFilter() {
+		$this->Auth->allow('lostPassword');
+		parent::beforeFilter();
+	}
+
 	/*************************************************************************
 	 * 								LOGIN PART
 	 *************************************************************************/
 
 	function login() {
+
+		/**
+		 * Update and display the date of the last login.
+		 */
+		if ($this->Auth->user('id')) {
+			/**
+			 * Pass the $lastLogin to the view.
+			 */
+			$this->Session->write('lastLogin', $this->User->findById($this->Auth->user('id')));
+
+			/**
+			 * Update the date of the last login.
+			 */
+			$this->User->id = $this->Auth->user('id');
+			$this->User->saveField('last_time', date('Y-m-d H:i:s'));
+		}
 
 		/**
 		 * Check if the user is already connected, if yes he is redirect to the main page.
@@ -64,7 +85,7 @@ class UsersController extends AppController {
 		$this->layout = 'login';
 
     }
-
+	
     function logout() {
     	
     	/**
@@ -73,6 +94,120 @@ class UsersController extends AppController {
 		$this->redirect($this->Auth->logout());
 
     }
+
+	/*************************************************************************
+	 * 								LOST PASSWORD
+	 *************************************************************************/
+	
+	function lostPassword() {
+
+		/**
+		 * Use a special layout for the lost password form.
+		 **/
+		$this->layout = 'lostpassword';
+
+		/**
+		 * Prepare the random generation password.
+		 * 
+		 * $lengthPassword = Size of the password
+		 * $newPassword = New declaration, to avoid PHP error
+		 * $possibleChar = Characters use in the random generation 
+		 *
+		 **/
+		$lengthPassword = "10";
+		$newPassword = "";
+		$i = 0;
+		$possibleChar = "0123456789bcdfghjkmnpqrstvwxyz"; 
+
+        /**
+         * Add random characters to $password until $lengthPassword is reached
+         */
+		while ($i < $lengthPassword) {
+
+            /**
+             * Pick a random character from the possible ones.
+             */
+            $char = substr($possibleChar, mt_rand(0, strlen($possibleChar)-1), 1);
+
+            /**
+             * We don't want this character if it's already in the password
+             */
+            if (!strstr($newPassword, $char)) { 
+                $newPassword .= $char;
+                $i++;
+			}
+		}
+
+		$optionForPassword = ClassRegistry::init('Option')->index();
+		//debug($optionForPassword['0']['Option']);
+
+		if (!empty($this->data)) {
+
+			/**
+			 * Select some informations about the user.
+			 */
+			$userByName = $this->User->findByName($this->data['User']['name']);
+
+			/**
+			 * Save the new user password.
+			 */
+			if ($this->User->save($this->data)) {
+				$this->User->id = $userByName['User']['id'];
+				$this->User->saveField('password', $newPassword);
+
+				/**
+				 * Support address.
+				 */
+				$this->Email->to = $userByName['User']['email'];
+
+				/**
+				 * ReplyTo address.
+				 */
+				$this->Email->replyTo = $userByName['User']['email'];
+
+				/**
+				 * Email sender.
+				 */
+				$this->Email->from = $optionForPassword['0']['Option']['mail_robot'] . ' <' . $optionForPassword['0']['Option']['mail_robot'] . '>';
+
+				/**
+				 * Email subject.
+				 */
+				$this->Email->subject = $optionForPassword['0']['Option']['name'] . ' - New password';
+
+				/**
+				 * We used the "lostpassword" template.
+				 * The templates are in views/layout/email/
+				 */
+				$this->Email->template = 'lostpassword';
+
+				/**
+				 * Choose which templates that it will be used.
+				 * 'html' = HTML template
+				 * 'text" = TEXT template
+				 * 'both' = HTML and TEXT templates
+				 */
+    			$this->Email->sendAs = 'html';
+
+    			/**
+				 * Put the member name in "name".
+				 * $name will be available in the email template.
+				 */
+    			$this->set('name', $userByName['User']['firstname']);
+   
+    			/**
+				 * Put all informations in some variables "message".
+				 * variables will be availables in the email template.
+				 */
+				$this->set('passwordToView', $newPassword);
+				$this->set('platformName', $optionForPassword['0']['Option']['name']);
+   				$this->set('supportAddress', $optionForPassword['0']['Option']['mail_support']);
+
+				$this->Email->send();
+
+			}
+		}
+	}
 
 	/*************************************************************************
 	 * 								MEMBER PART

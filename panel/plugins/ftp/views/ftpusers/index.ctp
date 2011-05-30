@@ -29,7 +29,7 @@ echo $this->element('ftp');
 		<div class="name"><?php __d('ftp', 'FTP user management.'); ?>
 			<div class="infos">
 				<?php __d('ftp', 'To transfer your site to the server an FTP user to be created. <br />
-								If you have multiple users it is possible to assign a directory specific to each.'
+							If you have multiple users it is possible to assign a directory specific to each.'
 						);
 				?>
 			</div>
@@ -51,6 +51,9 @@ echo $this->element('ftp');
 
 				<span class="quotas">
 					<?php __d('ftp', 'FTP users quotas'); ?> : <span class="highlight"><?php echo $quotas; ?></span>
+				</span>
+				<span class="help">
+					<?php echo $html->image('/img/main/help.png', array('url' => array('plugin' => NULL, 'controller' => 'infos', 'action' => 'summary'))); ?>
 				</span>
 
 				<br /><br />

@@ -50,6 +50,9 @@ echo $this->element('sql'); ?>
 				<span class="quotas">
 					<?php __d('sql', 'SQL users quotas'); ?> : <span class="highlight"><?php echo $quotas; ?></span>
 				</span>
+				<span class="help">
+					<?php echo $html->image('/img/main/help.png', array('url' => array('plugin' => NULL, 'controller' => 'infos', 'action' => 'summary'))); ?>
+				</span>
 
 				<br /><br />
 
