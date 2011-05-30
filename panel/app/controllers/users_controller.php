@@ -120,7 +120,7 @@ class UsersController extends AppController {
 		$possibleChar = "0123456789bcdfghjkmnpqrstvwxyz"; 
 
         /**
-         * Add random characters to $password until $lengthPassword is reached
+         * Add random characters to $password until $lengthPassword is reached.
          */
 		while ($i < $lengthPassword) {
 
@@ -130,7 +130,7 @@ class UsersController extends AppController {
             $char = substr($possibleChar, mt_rand(0, strlen($possibleChar)-1), 1);
 
             /**
-             * We don't want this character if it's already in the password
+             * We don't want this character if it's already in the password.
              */
             if (!strstr($newPassword, $char)) { 
                 $newPassword .= $char;
@@ -138,8 +138,10 @@ class UsersController extends AppController {
 			}
 		}
 
+		/**
+		 * Get some options from "Option" model.
+		 */
 		$optionForPassword = ClassRegistry::init('Option')->index();
-		//debug($optionForPassword['0']['Option']);
 
 		if (!empty($this->data)) {
 
